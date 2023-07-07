@@ -9,6 +9,14 @@ import {
   SpaceGrotesk_600SemiBold as spaceGroteskSemiBold,
   SpaceGrotesk_700Bold as spaceGroteskBold,
 } from "@expo-google-fonts/space-grotesk"
+import {
+  Inter_300Light as InterLight,
+  Inter_400Regular as InterRegular,
+  Inter_500Medium as InterMedium,
+  Inter_600SemiBold as InterSemiBold,
+  Inter_800ExtraBold as InterBold,
+
+} from "@expo-google-fonts/inter"
 
 export const customFontsToLoad = {
   spaceGroteskLight,
@@ -16,6 +24,11 @@ export const customFontsToLoad = {
   spaceGroteskMedium,
   spaceGroteskSemiBold,
   spaceGroteskBold,
+  InterRegular,
+  InterLight,
+  InterMedium,
+  InterSemiBold,
+  InterBold
 }
 
 const fonts = {
@@ -26,6 +39,15 @@ const fonts = {
     medium: "spaceGroteskMedium",
     semiBold: "spaceGroteskSemiBold",
     bold: "spaceGroteskBold",
+  },
+
+  Inter : {
+    light: "InterLight",
+    normal: "InterRegular",
+    medium: "InterMedium",
+    semiBold: "InterSemiBold",
+    bold: "InterBold",
+
   },
   helveticaNeue: {
     // iOS only font.
@@ -59,7 +81,7 @@ export const typography = {
   /**
    * The primary font. Used in most places.
    */
-  primary: fonts.spaceGrotesk,
+  primary: fonts.Inter,
   /**
    * An alternate font used for perhaps titles and stuff.
    */

@@ -1,82 +1,123 @@
-import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import {
-  Text,
-} from "../components"
-import { isRTL } from "../i18n"
-import { colors, spacing } from "../theme"
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import React from "react"
+import { View, StyleSheet, Image, ViewStyle, TextStyle, ImageBackground } from "react-native"
+import { Button, Text } from "../components"
+import { colors, spacing, typography } from "../theme"
+// @ts-ignore
+import Logo from "assets/images/imageWithoutText.png"
+// @ts-ignore
+import background from "assets/images/colorful-shades-abstract-background.jpg"
+import { useNavigation } from "@react-navigation/native"
 
-const welcomeLogo = require("../../assets/images/logo.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
+const WelcomeScreen = () => {
+  const navigation = useNavigation()
+  const $baseViewStylebuttonOne: ViewStyle = {
+    minHeight: 56,
+    borderRadius: 10,
+    borderWidth: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    overflow: "hidden",
+    marginBottom: 10,
+  }
+  const $baseViewStylebuttonTwo: ViewStyle = {
+    minHeight: 56,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    overflow: "hidden",
+    marginBottom: 10,
+    backgroundColor: "transparent",
+  }
+  const $baseTextStyle: TextStyle = {
+    fontSize: 13,
+    lineHeight: 20,
+    fontFamily: typography.primary.semiBold,
+    textAlign: "center",
+    flexShrink: 1,
+    flexGrow: 0,
+    zIndex: 2,
+  }
+  const $baseTextStyletwo: TextStyle = {
+    fontSize: 13,
+    lineHeight: 20,
+    fontFamily: typography.primary.semiBold,
+    textAlign: "center",
+    flexShrink: 1,
+    flexGrow: 0,
+    zIndex: 2,
+    color: "white",
+  }
 
-interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
-
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
-) {
-
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+  function signIn(): void {
+    navigation.navigate('SignInScreen' as never)
+  }
 
   return (
-    <View style={$container}>
-      <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
-      </View>
-
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
-      </View>
-    </View>
+    <>
+      <ImageBackground source={background} style={style.background}>
+        <View style={style.logoTopLeft}>
+          <Image source={Logo} style={style.logo} resizeMode="contain" />
+        </View>
+        <View style={style.background}>
+          <Text style={style.text} size={"xl"} weight={"semiBold"}> UBOD </Text>
+        </View>
+        <View style={style.footer}>
+          <Button style={$baseViewStylebuttonOne} textStyle={$baseTextStyle}
+                  text="SIGN UP FOR FREE"
+          />
+          <Button text="SIGN IN" style={$baseViewStylebuttonTwo} textStyle={$baseTextStyletwo}
+                  pressedStyle={$baseViewStylebuttonOne}
+                  onPress={signIn}
+          />
+        </View>
+      </ImageBackground>
+    </>
   )
+}
+
+const style = StyleSheet.create({
+  background: {
+    alignItems: "center",
+    flex: 2,
+    height: "100%",
+    justifyContent: "center",
+    width: "100%",
+  },
+  footer: {
+    flex: 1,
+    justifyContent: "flex-start",
+    padding: "2.5%",
+    width: "100%",
+  },
+  // eslint-disable-next-line react-native/no-color-literals
+  logo: {
+    backgroundColor: colors.transparent,
+    margin: "5%",
+    maxHeight: 50,
+    maxWidth: 50,
+    tintColor: colors.black,
+  },
+  logoTopLeft: {
+    alignItems: "flex-start",
+    flex: 1,
+    justifyContent: "flex-start",
+    marginTop: "10%",
+    width: "100%",
+  },
+  text: {
+    color: colors.background,
+  },
 })
 
-const $container: ViewStyle = {
-  flex: 1,
-  backgroundColor: colors.background,
-}
+export { WelcomeScreen }
 
-const $topContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
-  justifyContent: "center",
-  paddingHorizontal: spacing.lg,
-}
 
-const $bottomContainer: ViewStyle = {
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
-}
-const $welcomeLogo: ImageStyle = {
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
-}
 
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: TextStyle = {
-  marginBottom: spacing.md,
-}
