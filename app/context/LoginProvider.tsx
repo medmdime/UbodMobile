@@ -3,7 +3,7 @@ import { loadString } from "../utils/storage"
 import { create } from 'apisauce'
 
 // Define User type
-type User = {
+export type User = {
   activity_level: number;
   address: string;
   date_birth: string;
@@ -61,8 +61,8 @@ const LoginProvider: React.FC<LoginProviderProps> = ({children}) => {
           setIsLogged(false);
           setLoginPending(false)  // Hide the spinner if the response is not OK
         } else {
-          const data = response.config.data;
-          setUser(data);
+          const data = response.data;
+          setUser(data as User);
           setIsLogged(true);
           setLoginPending(false)  // Hide the spinner if everything is OK
         }

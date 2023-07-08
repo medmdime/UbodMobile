@@ -241,6 +241,9 @@ const $inputWrapperStyle: ViewStyle = {
   backgroundColor: colors.palette.neutral200,
   borderColor: colors.palette.neutral400,
   overflow: "hidden",
+  width:'100%',
+  paddingHorizontal:10,
+  paddingVertical:5
 }
 
 const $inputStyle: TextStyle = {

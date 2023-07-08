@@ -59,6 +59,9 @@ const WelcomeScreen = () => {
   function signIn(): void {
     navigation.navigate('SignInScreen' as never)
   }
+  function signUp(): void {
+    navigation.navigate('ObjectiveSupPageOne' as never)
+  }
 
   return (
     <>
@@ -72,6 +75,7 @@ const WelcomeScreen = () => {
         <View style={style.footer}>
           <Button style={$baseViewStylebuttonOne} textStyle={$baseTextStyle}
                   text="SIGN UP FOR FREE"
+                  onPress={signUp}
           />
           <Button text="SIGN IN" style={$baseViewStylebuttonTwo} textStyle={$baseTextStyletwo}
                   pressedStyle={$baseViewStylebuttonOne}

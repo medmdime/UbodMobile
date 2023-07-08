@@ -47,4 +47,8 @@ export class Api {
 }
 
 // Singleton instance of the API for convenience
-export const api = new Api()
+export const api1 = new Api()
+export const api = create({
+  baseURL: "https://ubod.online/api",
+  headers: { "Content-Type": "application/json" },
+})

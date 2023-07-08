@@ -16,7 +16,7 @@ import { useColorScheme } from "react-native"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-import { WelcomeScreen , SignInScreen}  from "../screens";
+import { WelcomeScreen , SignInScreen, ForgetPassword,ObjectiveSupPageOne , ObjectiveSupPageTwo, ObjectiveSupPageThree,ObjectiveSupPageFour,ObjectiveSupPageFive}  from "../screens";
 
 
 
@@ -34,8 +34,14 @@ import { WelcomeScreen , SignInScreen}  from "../screens";
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Welcome: undefined
-  SignInScreen: undefined
+  Welcome: React.FC
+  SignInScreen: React.FC
+  ForgetPassword: React.FC
+  ObjectiveSupPageOne: React.FC
+  ObjectiveSupPageTwo : React.FC
+  ObjectiveSupPageThree: React.FC
+  ObjectiveSupPageFour : React.FC
+  ObjectiveSupPageFive : React.FC
 }
 
 /**
@@ -58,7 +64,13 @@ const AppStack = observer(function AppStack() {
       screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
     >
           <Stack.Screen name="Welcome" component={WelcomeScreen} options={{headerShown:false}}/>
-          <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          <Stack.Screen name="SignInScreen" component={SignInScreen}  />
+          <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+          <Stack.Screen name="ObjectiveSupPageOne" component={ObjectiveSupPageOne} />
+          <Stack.Screen name="ObjectiveSupPageTwo" component={ObjectiveSupPageTwo} />
+          <Stack.Screen name="ObjectiveSupPageThree" component={ObjectiveSupPageThree} />
+          <Stack.Screen name="ObjectiveSupPageFour" component={ObjectiveSupPageFour} />
+          <Stack.Screen name="ObjectiveSupPageFive" component={ObjectiveSupPageFive} />
     </Stack.Navigator>
   )
 })
