@@ -3,7 +3,7 @@ import { ScrollView, Text, View } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { RadioButton } from "react-native-paper"
 import { Button } from "../../../components"
-import { save } from "../../../utils/storage"
+import { saveString } from "../../../utils/storage"
 
 
 const ObjectiveSupPageTwo = () => {
@@ -11,7 +11,7 @@ const ObjectiveSupPageTwo = () => {
   const [value, setValue] = useState<string>("")
   const _storeData = async () => {
     if (value) {
-      await save("activity_level", value)
+      await saveString("activity_level", value)
       navigation.navigate("ObjectiveSupPageThree" as never)
     }
   }

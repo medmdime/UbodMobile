@@ -5,7 +5,7 @@ import {
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Text } from "../../../components"
-import { save } from "../../../utils/storage"
+import { saveString } from "../../../utils/storage"
 import { RadioButton } from "react-native-paper"
 
 
@@ -14,7 +14,7 @@ const ObjectiveSupPageOne = () => {
   const [value, setValue] = useState<string>("")
   const _storeData = async () => {
     if (value.length) {
-      await save("objective", value)
+      await saveString("objective", value)
       navigation.navigate("ObjectiveSupPageTwo" as never)
     }
   }

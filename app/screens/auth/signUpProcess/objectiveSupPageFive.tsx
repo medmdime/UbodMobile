@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import {
   Text,
   View,
@@ -9,41 +9,42 @@ import { useNavigation } from "@react-navigation/native"
 import { Button, Icon, Screen, TextField } from "../../../components"
 import { loadString } from "../../../utils/storage"
 import { colors } from "../../../theme"
+import { api } from "../../../services/api"
+
+
+const RightAccessoryComponent = ({ onIconPress }) => (
+  <Icon
+    icon="view"
+    color={ colors.text}
+    onPress={onIconPress}
+  />
+);
+
+
+const RightAccessory = React.memo(RightAccessoryComponent);
 
 const ObjectiveSupPageFive = () => {
   const navigation = useNavigation()
-  const ErrorMessage = ({ password, passwordRepeat }) => {
-    if (password === passwordRepeat || passwordRepeat === "") {
-      return <Text></Text>
-    } else {
-      return <Text>The passwords do not match.</Text>
-    }
-  }
 
   const onRegisterPressed = () => {
     if (password === passwordRepeat) {
-      fetch("https://ubod.online/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      api.post("/user/register",
+         JSON.stringify({
           username : username.toLowerCase(),
           email :email.toLowerCase(),
           password,
           weight,
-          weight_obj,
+          weight_obj: weightObj,
           objective,
           height,
-          zipcode,
+          zipcode: zipCode,
           address,
-          date_birth,
+          date_birth: dateBirth,
           gender,
-          activity_level,
-        }),
-      })
-        .then(response => response.json())
-        .then(data => {
+          activity_level: activityLevel,
+        }))
+        .then(response => response.data)
+        .then((data:any) => {
           if (data.error) {
             Alert.alert(data.message.toString())
           } else {
@@ -58,21 +59,25 @@ const ObjectiveSupPageFive = () => {
       Alert.alert("Passwords do not match")
     }
   }
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [passwordRepeat, setPasswordRepeat] = useState("")
-  const [objective, setObjective] = useState("")
-  const [weight, setWeight] = useState("")
-  const [weight_obj, setWeight_obj] = useState("")
-  const [height, setHeight] = useState("")
-  const [zipcode, setZipcode] = useState("")
-  const [address, setAddress] = useState("")
-  const [date_birth, setDate_birth] = useState("")
-  const [activity_level, setActivity_level] = useState("")
-  const [gender, setGender] = useState("")
+
+  const [username, setUsername] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [passwordRepeat, setPasswordRepeat] = useState<string>("")
+  const [objective, setObjective] = useState<string>("")
+  const [weight, setWeight] = useState<string>("")
+  const [weightObj, setWeightObj] = useState<string>("")
+  const [height, setHeight] = useState<string>("")
+  const [zipCode, setZipCode] = useState<string>("")
+  const [address, setAddress] = useState<string>("")
+  const [dateBirth, setDateBirth] = useState<string>("")
+  const [activityLevel, setActivityLevel] = useState<string>("")
+  const [gender, setGender] = useState<string>("")
   const [passwordShow, setPassShow] = useState<boolean>(true)
   const [passwordShowRepeat, setPassShowRepeat] = useState<boolean>(true)
+
+
+
 
   loadString("objective").then(value => {
     if (value) {
@@ -85,14 +90,13 @@ const ObjectiveSupPageFive = () => {
   loadString("weight").then(value => {
     if (value) {
       setWeight(value);
-      console.log(value)
     } else {
       Alert.alert("weight")
     }
   })
   loadString("weight_obj").then(value => {
     if (value) {
-      setWeight_obj(value)
+      setWeightObj(value)
     } else {
       Alert.alert("weight_obj")
     }
@@ -106,7 +110,7 @@ const ObjectiveSupPageFive = () => {
   })
   loadString("zipcode").then(value => {
     if (value) {
-      setZipcode(value)
+      setZipCode(value)
     } else {
       Alert.alert("err5")
     }
@@ -122,7 +126,7 @@ const ObjectiveSupPageFive = () => {
 
   loadString("date_birth").then(value => {
     if (value) {
-      setDate_birth(value)
+      setDateBirth(value)
     } else {
       Alert.alert("err7")
     }
@@ -130,7 +134,7 @@ const ObjectiveSupPageFive = () => {
 
   loadString("activity_level").then(value => {
     if (value) {
-      setActivity_level(value)
+      setActivityLevel(value)
     } else {
       Alert.alert("err7")
     }
@@ -143,6 +147,21 @@ const ObjectiveSupPageFive = () => {
       Alert.alert("err7")
     }
   })
+  const handleIconPress = () => {
+    setPassShow(!passwordShow);
+  }
+  const handleIconPressSecond = () => {
+    setPassShowRepeat(!passwordShowRepeat);
+  }
+  const MemoizedRightAccessory = useMemo(() => {
+    return <RightAccessory onIconPress={handleIconPress}  />
+  }, [handleIconPress]);
+
+  const MemoizedRightAccessorySecond = useMemo(() => {
+    return <RightAccessory onIconPress={handleIconPressSecond}   />
+  }, [handleIconPressSecond]);
+
+
   return (
     <Screen preset={"scroll"}>
 
@@ -160,16 +179,13 @@ const ObjectiveSupPageFive = () => {
         />
         <TextField placeholder="Password" value={password} onChangeText={setPassword} label="Password"
                    secureTextEntry={passwordShow}
-                   RightAccessory={(props) => <Icon icon="view" containerStyle={props.style} color={colors.text}
-                                                    onPress={() => setPassShow(!passwordShow)} />} />
+                   RightAccessory={(props) => React.cloneElement(MemoizedRightAccessory, props)}
+        />
+
         <TextField placeholder="Password" value={passwordRepeat} onChangeText={setPasswordRepeat} label="Password"
                    secureTextEntry={passwordShowRepeat}
-                   RightAccessory={(props) => <Icon icon="view" containerStyle={props.style} color={colors.text}
-                                                    onPress={() => setPassShowRepeat(!passwordShowRepeat)} />} />
-        <ErrorMessage
-          password={password}
-          passwordRepeat={passwordRepeat}
-        />
+                   RightAccessory={(props) => React.cloneElement(MemoizedRightAccessorySecond, props)}
+                   />
       </View>
       <Button
         text="Register"

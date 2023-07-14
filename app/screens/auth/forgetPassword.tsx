@@ -20,7 +20,7 @@ const ForgetPassword = () => {
   const navigation = useNavigation()
   const [email, setEmail] = useState("")
 
-  const resetOnPress = () => {
+  const resetOnPress = () : void  => {
     api.post("/user/changepassask", JSON.stringify({
       email,
     })).then(response => response.data)

@@ -6,58 +6,57 @@ import {
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Screen, TextField } from "../../../components"
-import { loadString, save } from "../../../utils/storage"
+import { loadString, saveString } from "../../../utils/storage"
 
 const ObjectiveSupPageFour = () => {
   const navigation = useNavigation()
   const [High, setHigh] = useState<string>('')
-  const [weight, setweight] = useState<string>('')
-  const [iDweight, setIDweight] = useState<string>('')
+  const [weight, setWeigh] = useState<string>('')
+  const [iDwight, setIDwight] = useState<string>('')
   const [objective, setObjective] = useState<string>('')
+  const validateHeight = (h) => {
+    if (h > 300 || h < 100) {
+      Alert.alert("Please enter a valid height (from 100 to 300 cm)");
+      return false;
+    }
+    return true;
+  }
+
+  const validateWeight = (w) => {
+    if (w > 300 || w < 30) {
+      Alert.alert("Please enter a valid weight (from 30 to 300 kg)");
+      return false;
+    }
+    return true;
+  }
+
+  const validateIdealWeight = (iw, w, objective) => {
+    if (iw > 300 || iw < 30) {
+      Alert.alert("Please enter a valid ideal weight (from 30 to 300 kg)");
+      return false;
+    }
+    if ((objective === "1" && w < iw) ||
+      (objective === "3" && w > iw) ||
+      (objective === "2" && (iw < w - 5 || iw > w + 5))) {
+      Alert.alert("Please enter a valid ideal weight");
+      return false;
+    }
+    return true;
+  }
+
   const onSend = async () => {
-    if (High.length && weight.length && iDweight.length ) {
+    if (High.length && weight.length && iDwight.length) {
       const h = parseInt(High)
       const w = parseInt(weight)
-      const iw = parseInt(iDweight)
+      const iw = parseInt(iDwight)
 
-
-      if (h > 300 || h < 100) {
-        Alert.alert("Please enter a valid height (from 100 to 300 cm)")
-        return
-      }
-      if (w > 300 || w < 30) {
-        Alert.alert("Please enter a valid weight (from 30 to 300 kg)")
-        return
-      }
-      if (iw > 300 || iw < 30) {
-        Alert.alert("Please enter a valid ideal weight (from 30 to 300 kg)")
-        return
-      } else if (objective === "1") {
-        if (weight < iDweight) {
-          Alert.alert(
-            "Please enter a valid ideal weight (inferior to your weight)",
-          )
-          return
-        }
-      } else if (objective === "2") {
-        if (iw < w - 5 || iw > w + 5) {
-          Alert.alert(
-            "Please enter a valid ideal weight (between 5kg inferior and 5kg superior to your weight)",
-          )
-          return
-        }
-      } else if (objective === "3") {
-        if (weight > iDweight) {
-          Alert.alert(
-            "Please enter a valid ideal weight (superior to your weight)",
-          )
-          return
-        }
+      if (!validateHeight(h) || !validateWeight(w) || !validateIdealWeight(iw, w, objective)) {
+        return;
       }
 
-      await save("height", High)
-      await save("weight", weight)
-      await save("weight_obj", iDweight)
+      await saveString("height", High)
+      await saveString("weight", weight)
+      await saveString("weight_obj", iDwight)
 
       navigation.navigate("ObjectiveSupPageFive" as never)
     }
@@ -90,7 +89,7 @@ const ObjectiveSupPageFour = () => {
           placeholder="Weight"
           placeholderTextColor="#ccc"
           value={weight}
-          onChangeText={setweight}
+          onChangeText={setWeigh}
           multiline={true}
           numberOfLines={1}
         />
@@ -100,9 +99,9 @@ const ObjectiveSupPageFour = () => {
         <TextField
           keyboardType="number-pad"
           placeholder="Weight"
-          value={iDweight}
+          value={iDwight}
           placeholderTextColor="#ccc"
-          onChangeText={setIDweight}
+          onChangeText={setIDwight}
           multiline={true}
           numberOfLines={1}
         />

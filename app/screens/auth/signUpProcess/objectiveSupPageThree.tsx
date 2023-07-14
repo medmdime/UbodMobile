@@ -6,21 +6,33 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { Button, CountrySelect, Screen, TextField } from "../../../components"
 import { RadioButton } from "react-native-paper"
-import { save } from "../../../utils/storage"
-import DateTimePicker from "@react-native-community/datetimepicker"
+import { saveString } from "../../../utils/storage"
+import RNDateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker"
+import { format } from "date-fns"
 
 const ObjectiveSupPageThree = () => {
-  const navigation = useNavigation()
-  const [date, setDate] = useState(new Date())
-  const [gender, setGender] = useState<string>("")
-  const [place, setPlace] = useState<string>("")
-  const [code, setCode] = useState<string>("")
+  const navigation = useNavigation();
+  const [date , setDate] = useState<Date>(new Date());
+  const [gender, setGender] = useState<string>("");
+  const [place, setPlace] = useState<string>("");
+  const [code, setCode] = useState<string>("");
+  const setDateEvent = (event: DateTimePickerEvent, date: Date) => {
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      type,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      nativeEvent : { timestamp },
+    } = event;
+    setDate(date);
+  };
+
   const _storeData = async () => {
-    if (date !== new Date() && place !== "" && code !== "") {
-      await save("gender", gender)
-      await save("date_birth", date)
-      await save("address", place)
-      await save("zipcode", code)
+    if (date.toString() !== new Date().toString() && place !== "" && code !== "") {
+      await saveString("gender", gender)
+      await saveString("date_birth", format(date, 'yyyy-MM-dd\'T\'HH') )
+      await saveString("address", place)
+      await saveString("address", place)
+      await saveString("zipcode", code)
       navigation.navigate("ObjectiveSupPageFour" as never)
     }
   }
@@ -39,10 +51,13 @@ const ObjectiveSupPageThree = () => {
         <Text>
           When were you born ?
         </Text>
-        <DateTimePicker
+        <RNDateTimePicker
           mode="date"
+          dateFormat="shortdate"
+          onChange={setDateEvent}
+          maximumDate={new Date(2004, 1, 1)}
+          minimumDate={new Date(1950, 1, 1)}
           value={date}
-          onChange={() => setDate}
         />
         <Text> Where do you live ?</Text>
         <View>
