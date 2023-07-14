@@ -1,32 +1,34 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import {
   View,
   Image,
   StyleSheet,
-  Dimensions, Alert, ScrollView,
+  Dimensions, Alert,
 } from "react-native"
-// import {useNavigation} from '@react-navigation/native';
-import { Button, Icon, Screen, TextField } from "../../components"
+import { useNavigation } from "@react-navigation/native"
+import { Button, RightAccessoryComponent, Screen, TextField } from "../../components"
 // @ts-ignore
 import Logo from "assets/images/imageWithoutText.png"
 import { useLogin } from "../../context"
 import { colors } from "../../theme"
 import { saveString } from "../../utils/storage"
-import { useNavigation } from "@react-navigation/native"
 import { api } from "../../services/api"
+import { translate } from "../../i18n"
 
 const windowWidth = Dimensions.get("window").width
 const windowHeight = Dimensions.get("window").height
+const RightAccessory = React.memo(RightAccessoryComponent)
+
 
 const SignInScreen = () => {
   const { setUser, setIsLogged } = useLogin()
 
   const navigation = useNavigation()
   const onForgotPassword = () => {
-    navigation.navigate('ForgetPassword' as never);
+    navigation.navigate("ForgetPassword" as never)
   }
   const onSignUpPressed = () => {
-    navigation.navigate('ObjectiveSupPageOne' as never);
+    navigation.navigate("ObjectiveSupPageOne" as never)
 
   }
   const SignInPressed = () => {
@@ -45,32 +47,41 @@ const SignInScreen = () => {
           }
         })
         .catch(error => {
+           // TODO : UPDATE ERROR MESSAGE HERE
           Alert.alert("Error", error.message.toString())
         })
     } else {
-      Alert.alert("enter a value plz")
+      Alert.alert(translate("errorScreen.title",  { tx:'errorScreen.title'}))
     }
   }
 
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [passwordShow, setPassShow] = useState<boolean>(true)
+  const handleIconPress = () => {
+    setPassShow(!passwordShow)
+  }
+
+  const MemoizedRightAccessory = useMemo(() => {
+    return <RightAccessory onIconPress={handleIconPress} />
+  }, [handleIconPress])
+
   return (
-    <Screen preset={'scroll'}  >
+    <Screen preset={"scroll"}>
       <View style={styles.root}>
         <View style={styles.rootcontainer}>
           <Image source={Logo} style={styles.logo} resizeMode="contain" />
-          <TextField placeholder="Email" label="Email" autoComplete="email" value={email} onChangeText={setEmail}
+          <TextField placeholderTx={'SignIn.email'} placeholderTxOptions={{ tx:'SignIn.email'}} labelTx={'SignIn.email'} labelTxOptions={{ tx:'SignIn.email'}} autoComplete="email" value={email} onChangeText={setEmail}
                      blurOnSubmit={true} inputMode={"email"} />
-          <TextField placeholder="Password" value={password} onChangeText={setPassword} label="Password"
+
+          <TextField placeholderTx={'SignIn.password'} placeholderTxOptions={{ tx:'SignIn.password'}} labelTx={'SignIn.password'} labelTxOptions={{ tx:'SignIn.password'}} value={password} onChangeText={setPassword} autoComplete="password"
                      secureTextEntry={passwordShow}
-                     RightAccessory={(props) => <Icon icon="view" containerStyle={props.style} color={colors.text}
-                                                      onPress={() => setPassShow(!passwordShow)} />} />
-          <Button text="SIGN IN" onPress={SignInPressed} />
-          <Button text="Forgot Password ?" onPress={onForgotPassword} />
+                     RightAccessory={(props) => React.cloneElement(MemoizedRightAccessory, props)} />
+          <Button tx="SignIn.button" txOptions={{ tx: "SignIn.button" }} onPress={SignInPressed} />
+          <Button tx="SignIn.forgotPassword" txOptions={{ tx: "SignIn.forgotPassword" }} onPress={onForgotPassword} />
         </View>
         <View style={styles.CustomButton}>
-          <Button text="Don't have an account ? Create one " onPress={onSignUpPressed} />
+          <Button tx="SignIn.noAccount" txOptions={{ tx: "SignIn.noAccount" }} onPress={onSignUpPressed} />
         </View>
       </View>
     </Screen>

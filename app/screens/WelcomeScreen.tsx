@@ -8,6 +8,7 @@ import Logo from "assets/images/imageWithoutText.png"
 import background from "assets/images/colorful-shades-abstract-background.jpg"
 import { useNavigation } from "@react-navigation/native"
 
+
 const WelcomeScreen = () => {
   const navigation = useNavigation()
   const $baseViewStylebuttonOne: ViewStyle = {
@@ -62,7 +63,6 @@ const WelcomeScreen = () => {
   function signUp(): void {
     navigation.navigate('ObjectiveSupPageOne' as never)
   }
-
   return (
     <>
       <ImageBackground source={background} style={style.background}>
@@ -74,11 +74,11 @@ const WelcomeScreen = () => {
         </View>
         <View style={style.footer}>
           <Button style={$baseViewStylebuttonOne} textStyle={$baseTextStyle}
-                  text="SIGN UP FOR FREE"
+                  tx="WelcomePage.ButtonSignUp" txOptions={{ tx: "WelcomePage.ButtonSignUp" }}
                   onPress={signUp}
           />
-          <Button text="SIGN IN" style={$baseViewStylebuttonTwo} textStyle={$baseTextStyletwo}
-                  pressedStyle={$baseViewStylebuttonOne}
+          <Button tx="WelcomePage.ButtonSignIn" style={$baseViewStylebuttonTwo} textStyle={$baseTextStyletwo}
+                  pressedStyle={$baseViewStylebuttonOne} txOptions={{ tx: "WelcomePage.ButtonSignUp" }}
                   onPress={signIn}
           />
         </View>

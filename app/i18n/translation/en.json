@@ -1,0 +1,71 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "back": "Back",
+    "save": "Save",
+    "delete": "Delete",
+    "Next": "Next"
+  },
+  "welcomeScreen": {
+    "postscript": "This might not be what your app looks like, unless your designer gave you these screens and charged you for them, in that case...",
+    "readyForLaunch": "Your app is almost ready for launch",
+    "exciting": "Oh this is exciting"
+  },
+  "errorScreen": {
+    "title": "There's been a problem",
+    "friendlySubtitle": "This is the screen users will see in production when there has been an error. You'll want to customise this message (in 'app/i18n/translations.ts' and possibly the screen design too in 'app/screens/ErrorScreen.tsx'). If you want to remove this altogether, check out 'app/app.tsx' for the <ErrorBoundary> component.",
+    "reset": "Reset the app"
+  },
+  "emptyStateComponent": {
+    "generic": {
+      "heading": "So empty... so lonely",
+      "content": "There's no data yet. Try clicking the button to refresh or reload.",
+      "button": "Let's try this again"
+    }
+  },
+  "WelcomePage": {
+    "ButtonSignUp": "Sign Up for Free",
+    "ButtonSignIn": "Sign In"
+  },
+  "SignIn" : {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "button": "Sign In",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account? Create one",
+    "signUp": "Sign Up",
+    "resetPassword": "Reset Password",
+    "EmailError": "Please enter a valid email address",
+    "EmailSent": "Email sent successfully"
+  },
+  "SignUp" : {
+    "ObjectiveSupPageOne" :{
+      "title": "What's your Goal ?",
+      "labelOne": "Lose Weight",
+      "labelTwo": "Maintain Weight",
+      "labelThree": "Gain Weight",
+      "subtitle": "Tell us what you're aiming for, and we'll help you get there."
+    },
+    "ObjectiveSupPageTwo" :{
+      "title": "How Active are you ?",
+      "labelOne": "Sedentary: little to no exercise",
+      "labelTwo": "Lightly active: light exercise/sports 1-3 days/week",
+      "labelThree": "Moderately active: moderate exercise/sports 3-5 days/week",
+      "labelFour": "Very active: hard exercise/sports 6-7 days a week",
+      "subtitle": "This will help us determine your daily calorie needs."
+    },
+    "ObjectiveSupPageThree" :{
+      "titleGender": "What's Your Gender?",
+      "subtitleGender": "Calorie needs depends on the gender.",
+      "labelMale": "Male",
+      "labelFemale": "Female",
+      "labelOther": "Other",
+      "titleBirth": "When were you born ?",
+      "titleLive": "Where do you live ?",
+      "titlePostalCode": "What is your postal code ?",
+      "placeholderPostalCode": "Postal code"
+    }
+  }
+}

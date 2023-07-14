@@ -12,6 +12,7 @@ import { Button, TextField } from "../../components"
 // @ts-ignore
 import Logo from "assets/images/imageWithoutText.png"
 import { api } from "../../services/api"
+import { translate } from "../../i18n"
 
 const windowWidth = Dimensions.get("window").width
 const windowHeight = Dimensions.get("window").height
@@ -26,10 +27,10 @@ const ForgetPassword = () => {
     })).then(response => response.data)
       .then((data: any) => {
         if (data.message.toString() === "Email Sent") {
-          Alert.alert(data.message.toString())
+          Alert.alert(translate("SignIn.EmailSent" , {tx: "SignIn.EmailSent"}))
           navigation.navigate("SignInScreen" as never)
         } else {
-          Alert.alert(data.message.toString())
+          Alert.alert(translate("SignIn.EmailError" , {tx: "SignIn.EmailError"}) )
         }
       })
       .catch(() => {
@@ -41,9 +42,9 @@ const ForgetPassword = () => {
     <ScrollView style={styles.container}>
       <View style={styles.rootcontainer}>
         <Image source={Logo} style={styles.logo} resizeMode="contain" />
-        <TextField placeholder="Email" value={email} onChangeText={setEmail} />
+        <TextField placeholderTx={'SignIn.email'} placeholderTxOptions={{ tx:'SignIn.email'}} labelTx={'SignIn.email'} labelTxOptions={{ tx:'SignIn.email'}} autoComplete="email" value={email} onChangeText={setEmail} />
         <Button
-          text="RESET PASSWORD"
+           tx={'SignIn.resetPassword'} txOptions={{ tx:'SignIn.resetPassword'}}
           onPress={resetOnPress}
         />
       </View>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {  Text } from "react-native";
 import { useCountries } from "../hooks";
 import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
+import countries from "world-countries";
 
 interface CountrySelectProps {
   selected: string,
@@ -31,12 +32,16 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
     <DropDownPicker
       open={open}
       value={selected}
-      items={items}
+      items={items }
       setOpen={setOpen}
       setValue={setSelected}
       setItems={setItems}
       autoScroll
-      listMode={Mode}
+      listMode={"FLATLIST"}
+      language={"AR"}
+      placeholder={"Select your country"}
+
+
     />
   )
 }

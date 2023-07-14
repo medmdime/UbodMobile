@@ -1,0 +1,37 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Annuler",
+    "back": "Retour"
+  },
+  "welcomeScreen": {
+    "postscript": "Ceci pourrait ne pas ressembler à votre application, à moins que votre designer ne vous ait donné ces écrans et vous ait facturé pour cela, dans ce cas...",
+    "readyForLaunch": "Votre application est presque prête à être lancée",
+    "exciting": "Oh c'est excitant"
+  },
+  "errorScreen": {
+    "title": "Il y a eu un problème",
+    "friendlySubtitle": "Ceci est l'écran que les utilisateurs verront en production lorsqu'une erreur se produira. Vous voudrez personnaliser ce message (dans 'app/i18n/translations.ts' et éventuellement la conception de l'écran également dans 'app/screens/ErrorScreen.tsx'). Si vous voulez supprimer cela complètement, consultez 'app/app.tsx' pour le composant <ErrorBoundary>.",
+    "reset": "Réinitialiser l'application"
+  },
+  "emptyStateComponent": {
+    "generic": {
+      "heading": "Si vide... si seul",
+      "content": "Il n'y a pas encore de données. Essayez de cliquer sur le bouton pour rafraîchir ou recharger.",
+      "button": "Essayons cela encore une fois"
+    }
+  },
+  "WelcomePage": {
+    "ButtonSignUp": "Inscrivez-vous gratuitement",
+    "ButtonSignIn": "Se connecter"
+  },
+  "SignIn" : {
+    "title": "Se connecter",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "button": "Se connecter",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ? Créez-en un",
+    "signUp": "S'inscrire"
+  }
+}

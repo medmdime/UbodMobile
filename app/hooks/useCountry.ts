@@ -6,9 +6,10 @@ const formattedCountries = countries.map((country) => ({
   flag: country.flag,
   latlng: country.latlng,
   region: country.region,
+  translations : country.translations,
 }));
 
-const useCountries = () => {
+const useCountries = ( ) => {
   const getAll = () => formattedCountries;
 
   const getByValue = (value: string) => {

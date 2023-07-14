@@ -11,6 +11,7 @@ import {
 import { isRTL, translate } from "../i18n"
 import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
+import { Icon } from "./Icon"
 
 export interface TextFieldAccessoryProps {
   style: StyleProp<any>
@@ -228,6 +229,14 @@ export const TextField = forwardRef(function TextField(props: TextFieldProps, re
     </TouchableOpacity>
   )
 })
+
+export const RightAccessoryComponent = ({ onIconPress }) => (
+  <Icon
+    icon="view"
+    color={ colors.text}
+    onPress={onIconPress}
+  />
+);
 
 const $labelStyle: TextStyle = {
   marginBottom: spacing.xs,

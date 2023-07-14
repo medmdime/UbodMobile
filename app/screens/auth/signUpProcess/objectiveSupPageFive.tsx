@@ -6,19 +6,9 @@ import {
 } from "react-native"
 
 import { useNavigation } from "@react-navigation/native"
-import { Button, Icon, Screen, TextField } from "../../../components"
+import { Button, RightAccessoryComponent, Screen, TextField } from "../../../components"
 import { loadString } from "../../../utils/storage"
-import { colors } from "../../../theme"
 import { api } from "../../../services/api"
-
-
-const RightAccessoryComponent = ({ onIconPress }) => (
-  <Icon
-    icon="view"
-    color={ colors.text}
-    onPress={onIconPress}
-  />
-);
 
 
 const RightAccessory = React.memo(RightAccessoryComponent);
