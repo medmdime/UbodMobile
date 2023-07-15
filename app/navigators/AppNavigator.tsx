@@ -16,7 +16,9 @@ import { useColorScheme } from "react-native"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-import { WelcomeScreen , SignInScreen, ForgetPassword,ObjectiveSupPageOne , ObjectiveSupPageTwo, ObjectiveSupPageThree,ObjectiveSupPageFour,ObjectiveSupPageFive}  from "../screens";
+import { WelcomeScreen , SignInScreen, ForgetPassword,ObjectiveSupPageOne , ObjectiveSupPageTwo, ObjectiveSupPageThree,ObjectiveSupPageFour,ObjectiveSupPageFive,Profile,LoadingScreen}  from "../screens";
+import { useLogin } from "../context"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 
 
@@ -42,7 +44,11 @@ export type AppStackParamList = {
   ObjectiveSupPageThree: React.FC
   ObjectiveSupPageFour : React.FC
   ObjectiveSupPageFive : React.FC
+  BottomTabNavigator : React.FC
+  Profile : React.FC
 }
+
+
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -56,9 +62,31 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 >
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>()
+const Stack = createNativeStackNavigator<AppStackParamList>();
+const BottomTab = createBottomTabNavigator<AppStackParamList>();
 
-const AppStack = observer(function AppStack() {
+const BottomTabNavigator = observer(function AppStack() {
+  return (
+    <BottomTab.Navigator
+      screenOptions={{ headerShown: true}}
+    >
+      <BottomTab.Screen name="Profile" component={Profile} options={{headerShown:false}}/>
+      <BottomTab.Screen name="Welcome" component={WelcomeScreen} options={{headerShown:false}}/>
+
+    </BottomTab.Navigator>
+  )
+})
+
+const AppStack: React.FC = () => {
+return (
+  <Stack.Navigator
+    screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
+  >
+    <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{headerShown:false}}/>
+  </Stack.Navigator>
+)}
+
+const AuthStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
@@ -83,6 +111,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   const colorScheme = useColorScheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+  const {isLogged , loginPending} = useLogin();
 
   return (
     <NavigationContainer
@@ -90,7 +119,9 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+      {loginPending ? <LoadingScreen /> :
+        isLogged ? <AppStack /> : <AuthStack />
+      }
     </NavigationContainer>
   )
 })

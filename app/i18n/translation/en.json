@@ -66,6 +66,31 @@
       "titleLive": "Where do you live ?",
       "titlePostalCode": "What is your postal code ?",
       "placeholderPostalCode": "Postal code"
+    },
+    "ObjectiveSupPageFour": {
+      "titleHeight": "What is your height? (cm)",
+      "titleWeight": "What is your weight? (kg)",
+      "titleIdealWeight": "What is your ideal weight? (kg)",
+      "placeholderHeight": "Height",
+      "placeholderWeight": "Weight",
+      "placeholderIdealWeight": "Ideal Weight",
+      "alertValidHeight": "Please enter a valid height (from 100 to 300 cm)",
+      "alertValidWeight": "Please enter a valid weight (from 30 to 300 kg)",
+      "alertValidIdealWeight": "Please enter a valid ideal weight (from 30 to 300 kg)",
+      "alertValidIdealWeightCondition": "Please enter a valid ideal weight",
+      "alertError": "Error"
+    },
+    "ObjectiveSupPageFive": {
+      "titleCreateAccount": "Create an account",
+      "placeholderUsername": "Username",
+      "placeholderEmail": "Email",
+      "placeholderPassword": "Password",
+      "placeholderPasswordRepeat": "Repeat Password",
+      "labelPassword": "Password",
+      "buttonRegister": "Register",
+      "textTermsCondition": "By registering, you confirm that you accept our",
+      "textTermsOfUse": "Terms of Use",
+      "textPrivacyPolicy": "Privacy Policy"
     }
   }
 }

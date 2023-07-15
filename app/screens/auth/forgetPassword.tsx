@@ -14,12 +14,12 @@ import Logo from "assets/images/imageWithoutText.png"
 import { api } from "../../services/api"
 import { translate } from "../../i18n"
 
-const windowWidth = Dimensions.get("window").width
-const windowHeight = Dimensions.get("window").height
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const ForgetPassword = () => {
-  const navigation = useNavigation()
-  const [email, setEmail] = useState("")
+  const navigation = useNavigation();
+  const [email, setEmail] = useState<string>("");
 
   const resetOnPress = () : void  => {
     api.post("/user/changepassask", JSON.stringify({

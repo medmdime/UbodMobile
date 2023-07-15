@@ -1,22 +1,23 @@
 import React, { useState } from "react"
 import {
-  Text,
   View,
   Alert,
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import { Button, Screen, TextField } from "../../../components"
+import { Button, Screen, TextField, Text } from "../../../components"
 import { loadString, saveString } from "../../../utils/storage"
+import { translate } from "../../../i18n"
 
 const ObjectiveSupPageFour = () => {
   const navigation = useNavigation()
-  const [High, setHigh] = useState<string>('')
-  const [weight, setWeigh] = useState<string>('')
-  const [iDwight, setIDwight] = useState<string>('')
-  const [objective, setObjective] = useState<string>('')
+  const [High, setHigh] = useState<string>('');
+  const [weight, setWeigh] = useState<string>('');
+  const [iDwight, setIDwight] = useState<string>('');
+  const [objective, setObjective] = useState<string>('');
+
   const validateHeight = (h) => {
     if (h > 300 || h < 100) {
-      Alert.alert("Please enter a valid height (from 100 to 300 cm)");
+      Alert.alert(translate("SignUp.ObjectiveSupPageFour.alertValidHeight"));
       return false;
     }
     return true;
@@ -24,7 +25,7 @@ const ObjectiveSupPageFour = () => {
 
   const validateWeight = (w) => {
     if (w > 300 || w < 30) {
-      Alert.alert("Please enter a valid weight (from 30 to 300 kg)");
+      Alert.alert(translate("SignUp.ObjectiveSupPageFour.alertValidWeight"));
       return false;
     }
     return true;
@@ -32,13 +33,13 @@ const ObjectiveSupPageFour = () => {
 
   const validateIdealWeight = (iw, w, objective) => {
     if (iw > 300 || iw < 30) {
-      Alert.alert("Please enter a valid ideal weight (from 30 to 300 kg)");
+      Alert.alert(translate("SignUp.ObjectiveSupPageFour.alertValidIdealWeight"));
       return false;
     }
     if ((objective === "1" && w < iw) ||
       (objective === "3" && w > iw) ||
       (objective === "2" && (iw < w - 5 || iw > w + 5))) {
-      Alert.alert("Please enter a valid ideal weight");
+      Alert.alert(translate("SignUp.ObjectiveSupPageFour.alertValidIdealWeightCondition"));
       return false;
     }
     return true;
@@ -46,19 +47,19 @@ const ObjectiveSupPageFour = () => {
 
   const onSend = async () => {
     if (High.length && weight.length && iDwight.length) {
-      const h = parseInt(High)
-      const w = parseInt(weight)
-      const iw = parseInt(iDwight)
+      const h = parseInt(High);
+      const w = parseInt(weight);
+      const iw = parseInt(iDwight);
 
       if (!validateHeight(h) || !validateWeight(w) || !validateIdealWeight(iw, w, objective)) {
         return;
       }
 
-      await saveString("height", High)
-      await saveString("weight", weight)
-      await saveString("weight_obj", iDwight)
+      await saveString("height", High);
+      await saveString("weight", weight);
+      await saveString("weight_obj", iDwight);
 
-      navigation.navigate("ObjectiveSupPageFive" as never)
+      navigation.navigate("ObjectiveSupPageFive" as never);
     }
   }
 
@@ -66,39 +67,37 @@ const ObjectiveSupPageFour = () => {
     if (value) {
       setObjective(value)
     } else {
-      Alert.alert("err1")
+      Alert.alert(translate("SignUp.ObjectiveSupPageFour.alertError"));
     }
   })
 
   return (
     <Screen preset={"scroll"}>
       <View>
-        <Text> What is your height ? (cm)</Text>
+        <Text tx={"SignUp.ObjectiveSupPageFour.titleHeight"} />
         <TextField
           keyboardType="number-pad"
-          placeholder="Heigh"
+          placeholder={translate("SignUp.ObjectiveSupPageFour.placeholderHeight")}
           value={High}
           placeholderTextColor="#ccc"
           onChangeText={setHigh}
           multiline={true}
           numberOfLines={1}
         />
-        <Text> What is your Weight ? (kg)</Text>
+        <Text tx={"SignUp.ObjectiveSupPageFour.titleWeight"} />
         <TextField
           keyboardType="number-pad"
-          placeholder="Weight"
+          placeholder={translate("SignUp.ObjectiveSupPageFour.placeholderWeight")}
           placeholderTextColor="#ccc"
           value={weight}
           onChangeText={setWeigh}
           multiline={true}
           numberOfLines={1}
         />
-        <Text>
-          What is your ideal Weight ? (kg)
-        </Text>
+        <Text tx={"SignUp.ObjectiveSupPageFour.titleIdealWeight"} />
         <TextField
           keyboardType="number-pad"
-          placeholder="Weight"
+          placeholder={translate("SignUp.ObjectiveSupPageFour.placeholderIdealWeight")}
           value={iDwight}
           placeholderTextColor="#ccc"
           onChangeText={setIDwight}
@@ -108,7 +107,7 @@ const ObjectiveSupPageFour = () => {
       </View>
 
       <View>
-        <Button text="NEXT" onPress={onSend} />
+        <Button tx={"common.Next"} onPress={onSend} />
       </View>
     </Screen>
   )

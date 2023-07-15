@@ -17,7 +17,7 @@ const ObjectiveSupPageTwo = () => {
     }
   }
   return (
-    <Screen>
+    <Screen preset={'scroll'}>
       <View>
         <Text tx={"SignUp.ObjectiveSupPageTwo.title"} txOptions={{tx:"SignUp.ObjectiveSupPageTwo.title"}}/>
         <Text tx={"SignUp.ObjectiveSupPageTwo.subtitle"} txOptions={{tx:"SignUp.ObjectiveSupPageTwo.subtitle"}}/>

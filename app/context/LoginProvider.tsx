@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import { loadString } from "../utils/storage"
+import { load, loadString, save } from "../utils/storage"
 import { create } from 'apisauce'
 
 // Define User type
@@ -46,8 +46,7 @@ const LoginProvider: React.FC<LoginProviderProps> = ({children}) => {
 
   const isConnectedJwt =async () => {
 
-    try {
-      setLoginPending(true)
+      setLoginPending(true);
       const token = await loadString("jwt");
       setToken(token);
       if (token !== "") {
@@ -57,29 +56,31 @@ const LoginProvider: React.FC<LoginProviderProps> = ({children}) => {
         })
         const response = await api.get("/user/data")
         if (!response.ok) {
-          setUser({} as User);
-          setIsLogged(false);
-          setLoginPending(false)  // Hide the spinner if the response is not OK
+          load('user').then((data) => {
+            setUser(data as User);
+            setIsLogged(true);
+          }).catch(() => {
+            setUser({} as User);
+            setIsLogged(false);
+          })
+
         } else {
           const data = response.data;
           setUser(data as User);
-          setIsLogged(true);
-          setLoginPending(false)  // Hide the spinner if everything is OK
+          save("user", data as User).then(() => {
+            setIsLogged(true);
+          });
         }
       } else {
-        setUser({} as User)
-        setIsLogged(false)
-        setLoginPending(false)  // Hide the spinner if the token is empty
+        setUser({} as User);
+        setIsLogged(false);
       }
-    } catch (error) {
-      setUser({} as User)
-      setIsLogged(false)
-      setLoginPending(false)
-    }
+
   }
 
   useEffect(() => {
-    isConnectedJwt().catch();
+    isConnectedJwt()
+      .then(() =>setTimeout(()=>setLoginPending(false), 500));
   }, [token]);
 
   return (

@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, Image, ViewStyle, TextStyle, ImageBackground } from "react-native"
-import { Button, Text } from "../components"
-import { colors, spacing, typography } from "../theme"
+import { Button, Text } from "../../components"
+import { colors, spacing, typography } from "../../theme"
 // @ts-ignore
 import Logo from "assets/images/imageWithoutText.png"
 // @ts-ignore
@@ -9,7 +9,9 @@ import background from "assets/images/colorful-shades-abstract-background.jpg"
 import { useNavigation } from "@react-navigation/native"
 
 
+
 const WelcomeScreen = () => {
+
   const navigation = useNavigation()
   const $baseViewStylebuttonOne: ViewStyle = {
     minHeight: 56,

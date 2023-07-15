@@ -1,17 +1,16 @@
 import React, { useMemo, useState } from "react"
 import {
-  Text,
   View,
   Alert,
 } from "react-native"
 
 import { useNavigation } from "@react-navigation/native"
-import { Button, RightAccessoryComponent, Screen, TextField } from "../../../components"
+import { Button, RightAccessoryComponent, Screen, TextField, Text } from "../../../components"
 import { loadString } from "../../../utils/storage"
 import { api } from "../../../services/api"
+import { translate } from "../../../i18n"
 
-
-const RightAccessory = React.memo(RightAccessoryComponent);
+const RightAccessory = React.memo(RightAccessoryComponent)
 
 const ObjectiveSupPageFive = () => {
   const navigation = useNavigation()
@@ -19,9 +18,9 @@ const ObjectiveSupPageFive = () => {
   const onRegisterPressed = () => {
     if (password === passwordRepeat) {
       api.post("/user/register",
-         JSON.stringify({
-          username : username.toLowerCase(),
-          email :email.toLowerCase(),
+        JSON.stringify({
+          username: username.toLowerCase(),
+          email: email.toLowerCase(),
           password,
           weight,
           weight_obj: weightObj,
@@ -34,7 +33,7 @@ const ObjectiveSupPageFive = () => {
           activity_level: activityLevel,
         }))
         .then(response => response.data)
-        .then((data:any) => {
+        .then((data: any) => {
           if (data.error) {
             Alert.alert(data.message.toString())
           } else {
@@ -65,8 +64,6 @@ const ObjectiveSupPageFive = () => {
   const [gender, setGender] = useState<string>("")
   const [passwordShow, setPassShow] = useState<boolean>(true)
   const [passwordShowRepeat, setPassShowRepeat] = useState<boolean>(true)
-
-
 
 
   loadString("objective").then(value => {
@@ -154,39 +151,52 @@ const ObjectiveSupPageFive = () => {
 
   return (
     <Screen preset={"scroll"}>
-
       <View>
-        <Text> Create an account</Text>
         <TextField
-          placeholder="Username"
+          placeholderTx={"SignUp.ObjectiveSupPageFive.placeholderUsername"}
+          placeholderTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderUsername" }}
+          labelTx={"SignUp.ObjectiveSupPageFive.titleCreateAccount"}
+          labelTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.titleCreateAccount" }}
           value={username}
           onChangeText={setUsername}
         />
         <TextField
-          placeholder="Email"
+          placeholderTx={"SignUp.ObjectiveSupPageFive.placeholderEmail"}
+          placeholderTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderEmail" }}
+          labelTx={"SignUp.ObjectiveSupPageFive.placeholderEmail"}
+          labelTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderEmail" }}
           value={email}
           onChangeText={setEmail}
         />
-        <TextField placeholder="Password" value={password} onChangeText={setPassword} label="Password"
+        <TextField value={password} onChangeText={setPassword} labelTx={"SignUp.ObjectiveSupPageFive.labelPassword"}
+                   labelTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.labelPassword" }}
+                   placeholderTx={"SignUp.ObjectiveSupPageFive.placeholderPassword"}
+                   placeholderTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderPassword" }}
                    secureTextEntry={passwordShow}
                    RightAccessory={(props) => React.cloneElement(MemoizedRightAccessory, props)}
         />
 
-        <TextField placeholder="Password" value={passwordRepeat} onChangeText={setPasswordRepeat} label="Password"
+        <TextField value={passwordRepeat} onChangeText={setPasswordRepeat}
+                   labelTx={"SignUp.ObjectiveSupPageFive.placeholderPasswordRepeat"}
+                   labelTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderPasswordRepeat" }}
+                   placeholderTx={"SignUp.ObjectiveSupPageFive.placeholderPasswordRepeat"}
+                   placeholderTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderPasswordRepeat" }}
                    secureTextEntry={passwordShowRepeat}
                    RightAccessory={(props) => React.cloneElement(MemoizedRightAccessorySecond, props)}
-                   />
+        />
       </View>
       <Button
-        text="Register"
+        tx={"SignUp.ObjectiveSupPageFive.buttonRegister"}
+        txOptions={{ tx: "SignUp.ObjectiveSupPageFive.buttonRegister" }}
         onPress={onRegisterPressed}
       />
       <Text>
-        By registering, you confirm that you accept our{" "}
-        <Text>Terms of Use </Text> and{" "}
-        <Text>Privacy Policy</Text>
+        {translate("SignUp.ObjectiveSupPageFive.textTermsCondition", { tx: "SignUp.ObjectiveSupPageFive.textTermsCondition" })}
+        <Text tx={"SignUp.ObjectiveSupPageFive.textTermsOfUse"}
+              txOptions={{ tx: "SignUp.ObjectiveSupPageFive.textTermsOfUse" }} /> and
+        <Text tx={"SignUp.ObjectiveSupPageFive.textPrivacyPolicy"}
+              txOptions={{ tx: "SignUp.ObjectiveSupPageFive.textPrivacyPolicy" }} />
       </Text>
-
     </Screen>
   )
 }

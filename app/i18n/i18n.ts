@@ -15,14 +15,14 @@ i18n.fallbacks = true
  */
 i18n.translations = { ar , fr,en, "en-US": en}
 
-i18n.locale = 'en-US'
+i18n.locale = 'fr'
 /**
  * i18n.locale = Localization.locale
  */
 
 
 
-export const isRTL = Localization.getLocales()[0].languageCode === "ar"
+export const isRTL = Localization.isRTL
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 /**

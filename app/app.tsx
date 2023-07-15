@@ -39,17 +39,12 @@ const config = {
     Login: {
       path: "SignInScreen",
     },
-    Welcome: "welcome",
-    Demo: {
-      screens: {
-        DemoShowroom: {
-          path: "showroom/:queryIndex?/:itemIndex?",
-        },
-        DemoDebug: "debug",
-        DemoPodcastList: "podcast",
-        DemoCommunity: "community",
-      },
-    },
+    Welcome: "WelcomeScreen",
+    ObjectiveSupPageOne: "ObjectiveSupPageOne",
+    ObjectiveSupPageTwo: "ObjectiveSupPageTwo",
+    ObjectiveSupPageThree: "ObjectiveSupPageThree",
+    ObjectiveSupPageFour: "ObjectiveSupPageFour",
+    ObjectiveSupPageFive: "ObjectiveSupPageFive",
   },
 }
 
@@ -98,11 +93,11 @@ function App(props: AppProps) {
     <LoginProvider >
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <AppNavigator
-          linking={linking}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
+          <AppNavigator
+            linking={linking}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
       </ErrorBoundary>
     </SafeAreaProvider>
     </LoginProvider>

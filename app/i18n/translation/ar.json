@@ -2,7 +2,10 @@
   "common": {
     "ok": "نعم",
     "cancel": "يلغي",
-    "back": "خلف"
+    "back": "خلف",
+    "save": "يحفظ",
+    "delete": "يمسح",
+    "Next": "التالي"
   },
   "welcomeScreen": {
     "postscript": "قد لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك ، إلا إذا أعطاك المصمم هذه الشاشات وفرض عليك رسومًا مقابلها ، في هذه الحالة ...",
@@ -32,6 +35,62 @@
     "button": "تسجيل الدخول",
     "forgotPassword": "هل نسيت كلمة السر؟",
     "noAccount": "ليس لديك حساب؟ ",
-    "signUp": "اشتراك"
+    "signUp": "اشتراك",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "EmailError": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "EmailSent": "تم إرسال البريد الإلكتروني بنجاح"
+  },
+  "SignUp": {
+    "ObjectiveSupPageOne": {
+      "title": "ما هو هدفك ؟",
+      "labelOne": "فقدان الوزن",
+      "labelTwo": "حافظ على الوزن",
+      "labelThree": "يزداد وزن",
+      "subtitle": "أخبرنا بما تطمح إليه ، وسنساعدك على تحقيق ذلك."
+    },
+    "ObjectiveSupPageTwo": {
+      "title": "كيف نشطة أنت ؟",
+      "labelOne": "خامل: قليل من ممارسة الرياضة",
+      "labelTwo": "نشاط خفيف: تمارين خفيفة / رياضات 1-3 أيام / أسبوع",
+      "labelThree": "نشط بشكل معتدل: تمرين معتدل / رياضة 3-5 أيام / أسبوع",
+      "labelFour": "نشط جدا: تمرين شاق / رياضة 6-7 أيام في الأسبوع",
+      "subtitle": "سيساعدنا هذا في تحديد احتياجاتك اليومية من السعرات الحرارية."
+    },
+    "ObjectiveSupPageThree": {
+      "titleGender": "ما هو جنسك؟",
+      "subtitleGender": "احتياجات السعرات الحرارية تعتمد على الجنس.",
+      "labelMale": "ذكر",
+      "labelFemale": "أنثى",
+      "labelOther": "آخر",
+      "titleBirth": "متى ولدت ؟",
+      "titleLive": "أين تعيش ؟",
+      "titlePostalCode": "ما هو الرمز البريدي الخاص بك ؟",
+      "placeholderPostalCode": "رمز بريدي"
+    },
+    "ObjectiveSupPageFour": {
+      "titleHeight": "ما هو طولك؟ ",
+      "titleWeight": "كم وزنك؟ ",
+      "titleIdealWeight": "ما هو وزنك المثالي؟ ",
+      "placeholderHeight": "ارتفاع",
+      "placeholderWeight": "وزن",
+      "placeholderIdealWeight": "الوزن المثالي",
+      "alertValidHeight": "الرجاء إدخال ارتفاع صالح (من 100 إلى 300 سم)",
+      "alertValidWeight": "الرجاء إدخال وزن صالح (من 30 إلى 300 كجم)",
+      "alertValidIdealWeight": "الرجاء إدخال وزن مثالي صالح (من 30 إلى 300 كجم)",
+      "alertValidIdealWeightCondition": "الرجاء إدخال وزن مثالي صالح",
+      "alertError": "خطأ"
+    },
+    "ObjectiveSupPageFive": {
+      "titleCreateAccount": "إنشاء حساب",
+      "placeholderUsername": "اسم المستخدم",
+      "placeholderEmail": "بريد إلكتروني",
+      "placeholderPassword": "كلمة المرور",
+      "placeholderPasswordRepeat": "اعد كلمة السر",
+      "labelPassword": "كلمة المرور",
+      "buttonRegister": "يسجل",
+      "textTermsCondition": "بالتسجيل ، فإنك تؤكد قبولك لدينا",
+      "textTermsOfUse": "شروط الاستخدام",
+      "textPrivacyPolicy": "سياسة الخصوصية"
+    }
   }
 }

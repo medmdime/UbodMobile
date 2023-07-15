@@ -1,10 +1,9 @@
 import React, { useState } from "react"
 import {
   View,
-  ScrollView,
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import { Button, Text } from "../../../components"
+import { Button, Screen, Text } from "../../../components"
 import { saveString } from "../../../utils/storage"
 import { RadioButton } from "react-native-paper"
 import { translate } from "../../../i18n"
@@ -20,7 +19,7 @@ const ObjectiveSupPageOne = () => {
     }
   }
   return (
-    <ScrollView>
+    <Screen preset={'scroll'}>
       <View>
         <Text tx={"SignUp.ObjectiveSupPageOne.title"} txOptions={{tx:"SignUp.ObjectiveSupPageOne.title"}}/>
         <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
@@ -30,9 +29,9 @@ const ObjectiveSupPageOne = () => {
         </RadioButton.Group>
       </View>
       <View >
-        <Button tx={"common.Next"} txOptions={{tx:"common.Next"}} onPress={_storeData} />
+        <Button tx={"common.Next"} txOptions={{ tx: "common.Next" }} onPress={_storeData} />
       </View>
-    </ScrollView>
+    </Screen>
   )
 }
 

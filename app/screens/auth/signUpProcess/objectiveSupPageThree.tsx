@@ -35,7 +35,7 @@ const ObjectiveSupPageThree = () => {
 
   return (
     <PaperProvider>
-      <Screen preset={"scroll"}>
+      <Screen preset="scroll"  >
         <Text tx={"SignUp.ObjectiveSupPageThree.titleGender"} txOptions={{tx:"SignUp.ObjectiveSupPageThree.titleGender"}}/>
         <Text tx={"SignUp.ObjectiveSupPageThree.subtitleGender"} txOptions={{tx:"SignUp.ObjectiveSupPageThree.subtitleGender"}}/>
         <View>
@@ -48,12 +48,10 @@ const ObjectiveSupPageThree = () => {
           <Screen>
             <Button onPress={showMode} text={`selected: ${formatDate(format(date, 'yyyy-MM-dd\'T\'HH'))}`} />
             {/* //TODO : fix the date picker pour android */}
-            <DatePicker show={show} setShow={setShow} date={date} setDate={setDate}  />
+            <DatePicker show={show} setShow={setShow} date={date} setDate={setDate} />
           </Screen>
           <Text tx={"SignUp.ObjectiveSupPageThree.titleLive"} txOptions={{tx:"SignUp.ObjectiveSupPageThree.titleLive"}}/>
-          <View>
             <CountrySelect selected={place} setSelected={setPlace} Mode={"MODAL"} />
-          </View>
           <View>
             <Text tx={"SignUp.ObjectiveSupPageThree.titlePostalCode"} txOptions={{tx:"SignUp.ObjectiveSupPageThree.titlePostalCode"}}/>
             <TextField
@@ -68,7 +66,7 @@ const ObjectiveSupPageThree = () => {
             />
           </View>
         </View>
-        <Button tx={"common.Next"} onPress={_storeData} />
+        <Button tx={"common.Next"} txOptions={{tx:"common.Next"}} onPress={_storeData} />
       </Screen>
     </PaperProvider>
   )
