@@ -16,10 +16,21 @@ import { useColorScheme } from "react-native"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-import { WelcomeScreen , SignInScreen, ForgetPassword,ObjectiveSupPageOne , ObjectiveSupPageTwo, ObjectiveSupPageThree,ObjectiveSupPageFour,ObjectiveSupPageFive,Profile,LoadingScreen}  from "../screens";
+import {
+  WelcomeScreen,
+  SignInScreen,
+  ForgetPassword,
+  ObjectiveSupPageOne,
+  ObjectiveSupPageTwo,
+  ObjectiveSupPageThree,
+  ObjectiveSupPageFour,
+  ObjectiveSupPageFive,
+  Profile,
+  LoadingScreen,
+} from "../screens"
 import { useLogin } from "../context"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-
+import { AutoImage, useAutoImage } from "../components"
 
 
 /**
@@ -40,14 +51,13 @@ export type AppStackParamList = {
   SignInScreen: React.FC
   ForgetPassword: React.FC
   ObjectiveSupPageOne: React.FC
-  ObjectiveSupPageTwo : React.FC
+  ObjectiveSupPageTwo: React.FC
   ObjectiveSupPageThree: React.FC
-  ObjectiveSupPageFour : React.FC
-  ObjectiveSupPageFive : React.FC
-  BottomTabNavigator : React.FC
-  Profile : React.FC
+  ObjectiveSupPageFour: React.FC
+  ObjectiveSupPageFive: React.FC
+  BottomTabNavigator: React.FC
+  Profile: React.FC
 }
-
 
 
 /**
@@ -62,43 +72,59 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 >
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>();
-const BottomTab = createBottomTabNavigator<AppStackParamList>();
+const Stack = createNativeStackNavigator<AppStackParamList>()
+const BottomTab = createBottomTabNavigator<AppStackParamList>()
 
 const BottomTabNavigator = observer(function AppStack() {
   return (
     <BottomTab.Navigator
-      screenOptions={{ headerShown: true}}
+      screenOptions={{ headerShown: true }}
     >
-      <BottomTab.Screen name="Profile" component={Profile} options={{headerShown:false}}/>
-      <BottomTab.Screen name="Welcome" component={WelcomeScreen} options={{headerShown:false}}/>
+      <BottomTab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIconStyle: { width: 30, height: 30 },
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <AutoImage
+                source={require("../../assets/icons/icons8-deadlift-90.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            )
+          },
+        }}
+      />
 
+      <BottomTab.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
     </BottomTab.Navigator>
   )
 })
 
 const AppStack: React.FC = () => {
-return (
-  <Stack.Navigator
-    screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
-  >
-    <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{headerShown:false}}/>
-  </Stack.Navigator>
-)}
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
+    >
+      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} />
+    </Stack.Navigator>
+  )
+}
 
 const AuthStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
     >
-          <Stack.Screen name="Welcome" component={WelcomeScreen} options={{headerShown:false}}/>
-          <Stack.Screen name="SignInScreen" component={SignInScreen}  />
-          <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-          <Stack.Screen name="ObjectiveSupPageOne" component={ObjectiveSupPageOne} />
-          <Stack.Screen name="ObjectiveSupPageTwo" component={ObjectiveSupPageTwo} />
-          <Stack.Screen name="ObjectiveSupPageThree" component={ObjectiveSupPageThree} />
-          <Stack.Screen name="ObjectiveSupPageFour" component={ObjectiveSupPageFour} />
-          <Stack.Screen name="ObjectiveSupPageFive" component={ObjectiveSupPageFive} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="SignInScreen" component={SignInScreen} />
+      <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+      <Stack.Screen name="ObjectiveSupPageOne" component={ObjectiveSupPageOne} />
+      <Stack.Screen name="ObjectiveSupPageTwo" component={ObjectiveSupPageTwo} />
+      <Stack.Screen name="ObjectiveSupPageThree" component={ObjectiveSupPageThree} />
+      <Stack.Screen name="ObjectiveSupPageFour" component={ObjectiveSupPageFour} />
+      <Stack.Screen name="ObjectiveSupPageFive" component={ObjectiveSupPageFive} />
     </Stack.Navigator>
   )
 })
@@ -111,7 +137,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   const colorScheme = useColorScheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
-  const {isLogged , loginPending} = useLogin();
+  const { isLogged, loginPending } = useLogin()
 
   return (
     <NavigationContainer

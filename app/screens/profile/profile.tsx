@@ -1,9 +1,6 @@
 import React from "react"
 import {
-  View,
   Text,
-  ScrollView,
-  Pressable,
 } from "react-native"
 import { useLogin } from "../../context"
 import { remove } from "../../utils/storage"
