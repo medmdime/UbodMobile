@@ -13,6 +13,7 @@ import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsets
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
 
+
 export interface HeaderProps {
   /**
    * The layout of the title relative to the action components.

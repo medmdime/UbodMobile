@@ -72,7 +72,7 @@ const SignInScreen = () => {
         <View style={styles.rootcontainer}>
           <Image source={Logo} style={styles.logo} resizeMode="contain" />
           <TextField placeholderTx={'SignIn.email'} placeholderTxOptions={{ tx:'SignIn.email'}} labelTx={'SignIn.email'} labelTxOptions={{ tx:'SignIn.email'}} autoComplete="email" value={email} onChangeText={setEmail}
-                     blurOnSubmit={true} inputMode={"email"} />
+                     blurOnSubmit={true} inputMode={"email"}  />
 
           <TextField placeholderTx={'SignIn.password'} placeholderTxOptions={{ tx:'SignIn.password'}} labelTx={'SignIn.password'} labelTxOptions={{ tx:'SignIn.password'}} value={password} onChangeText={setPassword} autoComplete="password"
                      secureTextEntry={passwordShow}

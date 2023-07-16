@@ -10,13 +10,12 @@ import {
 import { useNavigation } from "@react-navigation/native"
 import { Button, TextField } from "../../components"
 // @ts-ignore
-import Logo from "assets/images/imageWithoutText.png"
 import { api } from "../../services/api"
 import { translate } from "../../i18n"
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
+const Logo = require("assets/images/imageWithoutText.png");
 const ForgetPassword = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState<string>("");

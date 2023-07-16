@@ -1,4 +1,7 @@
-// TODO: write documentation for colors and palette in own markdown file and add links from here
+import { Appearance } from 'react-native';
+
+const colorScheme = Appearance.getColorScheme();
+const isDarkMode = colorScheme === 'dark';
 
 const palette = {
   neutral100: "#FFFFFF",
@@ -37,7 +40,22 @@ const palette = {
   overlay50: "rgba(25, 16, 21, 0.5)",
   black : "black",
 } as const
-export const colors = {
+
+export const darkColors = {
+  palette,
+  transparent: "rgba(255, 255, 255, 0)",
+  text: palette.neutral100,
+  textDim: palette.neutral300,
+  background: palette.neutral900,
+  border: palette.neutral700,
+  tint: palette.primary300,
+  separator: palette.neutral600,
+  error: palette.angry100,
+  errorBackground: palette.angry500,
+  black: palette.neutral100, // In dark mode, "black" would be used for light text
+}
+
+ const lightColors = {
     /**
      * The palette is available to use, but prefer using the name.
      * This is only included for rare, one-off cases. Try to use
@@ -84,3 +102,4 @@ export const colors = {
 
     black: palette.black,
   }
+export const colors = isDarkMode ? darkColors : lightColors;

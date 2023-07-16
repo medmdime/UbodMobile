@@ -27,10 +27,15 @@ import {
   ObjectiveSupPageFive,
   Profile,
   LoadingScreen,
+  Home,
+  Sport,
+  Nutrition
+
+
 } from "../screens"
 import { useLogin } from "../context"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { AutoImage, useAutoImage } from "../components"
+import { AutoImage } from "../components"
 
 
 /**
@@ -57,6 +62,11 @@ export type AppStackParamList = {
   ObjectiveSupPageFive: React.FC
   BottomTabNavigator: React.FC
   Profile: React.FC
+  Sports: React.FC
+  Home: React.FC
+  Nutrition: React.FC
+  LoadingScreen: React.FC
+
 }
 
 
@@ -81,6 +91,54 @@ const BottomTabNavigator = observer(function AppStack() {
       screenOptions={{ headerShown: true }}
     >
       <BottomTab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIconStyle: { width: 30, height: 30 },
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <AutoImage
+                source={require("assets/icons/icons8-home-100.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            )
+          },
+        }}
+      />
+      <BottomTab.Screen
+        name="Sports"
+        component={Sport}
+        options={{
+          tabBarIconStyle: { width: 30, height: 30 },
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <AutoImage
+                source={require("assets/icons/icons8-deadlift-90.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            )
+          },
+        }}
+      />
+      <BottomTab.Screen
+        name="Nutrition"
+        component={Nutrition}
+        options={{
+          tabBarIconStyle: { width: 30, height: 30 },
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <AutoImage
+                source={require("assets/icons/icons8-salad-100.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            )
+          },
+        }}
+      />
+      <BottomTab.Screen
         name="Profile"
         component={Profile}
         options={{
@@ -89,7 +147,7 @@ const BottomTabNavigator = observer(function AppStack() {
           tabBarIcon: ({ color, size }) => {
             return (
               <AutoImage
-                source={require("../../assets/icons/icons8-deadlift-90.png")}
+                source={require("assets/icons/icons8-services-96.png")}
                 style={{ width: size, height: size, tintColor: color }}
               />
             )
@@ -97,7 +155,8 @@ const BottomTabNavigator = observer(function AppStack() {
         }}
       />
 
-      <BottomTab.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+
+
     </BottomTab.Navigator>
   )
 })

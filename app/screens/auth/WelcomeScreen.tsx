@@ -2,16 +2,12 @@ import React from "react"
 import { View, StyleSheet, Image, ViewStyle, TextStyle, ImageBackground } from "react-native"
 import { Button, Text } from "../../components"
 import { colors, spacing, typography } from "../../theme"
-// @ts-ignore
-import Logo from "assets/images/imageWithoutText.png"
-// @ts-ignore
-import background from "assets/images/colorful-shades-abstract-background.jpg"
 import { useNavigation } from "@react-navigation/native"
 
 
-
+const Logo = require("assets/images/imageWithoutText.png");
+const background = require("assets/images/colorful-shades-abstract-background.jpg");
 const WelcomeScreen = () => {
-
   const navigation = useNavigation()
   const $baseViewStylebuttonOne: ViewStyle = {
     minHeight: 56,
@@ -75,9 +71,9 @@ const WelcomeScreen = () => {
           <Text style={style.text} size={"xl"} weight={"semiBold"}> UBOD </Text>
         </View>
         <View style={style.footer}>
-          <Button style={$baseViewStylebuttonOne} textStyle={$baseTextStyle}
+          <Button style={$baseViewStylebuttonOne}
                   tx="WelcomePage.ButtonSignUp" txOptions={{ tx: "WelcomePage.ButtonSignUp" }}
-                  onPress={signUp}
+                  onPress={signUp} textStyle={$baseTextStyle}
           />
           <Button tx="WelcomePage.ButtonSignIn" style={$baseViewStylebuttonTwo} textStyle={$baseTextStyletwo}
                   pressedStyle={$baseViewStylebuttonOne} txOptions={{ tx: "WelcomePage.ButtonSignUp" }}

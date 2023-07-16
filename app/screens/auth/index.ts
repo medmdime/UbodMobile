@@ -1,3 +1,3 @@
 export * from './signIn'
-export * from './forgetPassword'
+export * from './ForgetPassword'
 export * from './signUpProcess'
