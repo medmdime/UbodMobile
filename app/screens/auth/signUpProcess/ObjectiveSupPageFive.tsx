@@ -5,12 +5,18 @@ import {
 } from "react-native"
 
 import { useNavigation } from "@react-navigation/native"
-import { Button, RightAccessoryComponent, Screen, TextField, Text } from "../../../components"
+import {
+  Button,
+  Screen,
+  TextField,
+  Text,
+  TextFieldAccessoryProps,
+  Icon,
+} from "../../../components"
 import { loadString } from "../../../utils/storage"
 import { api } from "../../../services/api"
 import { translate } from "../../../i18n"
-
-const RightAccessory = React.memo(RightAccessoryComponent)
+import { colors } from "../../../theme"
 
 const ObjectiveSupPageFive = () => {
   const navigation = useNavigation()
@@ -134,20 +140,36 @@ const ObjectiveSupPageFive = () => {
       Alert.alert("err7")
     }
   })
-  const handleIconPress = () => {
-    setPassShow(!passwordShow);
-  }
-  const handleIconPressSecond = () => {
-    setPassShowRepeat(!passwordShowRepeat);
-  }
-  const MemoizedRightAccessory = useMemo(() => {
-    return <RightAccessory onIconPress={handleIconPress}  />
-  }, [handleIconPress]);
 
-  const MemoizedRightAccessorySecond = useMemo(() => {
-    return <RightAccessory onIconPress={handleIconPressSecond}   />
-  }, [handleIconPressSecond]);
+  const PasswordRightAccessory = useMemo(
+    () =>
+      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
+        return (
+          <Icon
+            icon={passwordShow ? "view" : "hidden"}
+            color={colors.palette.neutral800}
+            containerStyle={props.style}
+            onPress={() => setPassShow(!passwordShow)}
+          />
+        )
+      },
+    [passwordShow],
+  )
 
+  const PasswordRightAccessoryRepeat = useMemo(
+    () =>
+      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
+        return (
+          <Icon
+            icon={passwordShowRepeat ? "view" : "hidden"}
+            color={colors.palette.neutral800}
+            containerStyle={props.style}
+            onPress={() => setPassShowRepeat(!passwordShowRepeat)}
+          />
+        )
+      },
+    [passwordShowRepeat],
+  )
 
   return (
     <Screen preset={"scroll"}>
@@ -173,7 +195,7 @@ const ObjectiveSupPageFive = () => {
                    placeholderTx={"SignUp.ObjectiveSupPageFive.placeholderPassword"}
                    placeholderTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderPassword" }}
                    secureTextEntry={passwordShow}
-                   RightAccessory={(props) => React.cloneElement(MemoizedRightAccessory, props)}
+                   RightAccessory={PasswordRightAccessory}
         />
 
         <TextField value={passwordRepeat} onChangeText={setPasswordRepeat}
@@ -182,7 +204,7 @@ const ObjectiveSupPageFive = () => {
                    placeholderTx={"SignUp.ObjectiveSupPageFive.placeholderPasswordRepeat"}
                    placeholderTxOptions={{ tx: "SignUp.ObjectiveSupPageFive.placeholderPasswordRepeat" }}
                    secureTextEntry={passwordShowRepeat}
-                   RightAccessory={(props) => React.cloneElement(MemoizedRightAccessorySecond, props)}
+                   RightAccessory={PasswordRightAccessoryRepeat}
         />
       </View>
       <Button

@@ -1,26 +1,10 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import { load, loadString, save } from "../utils/storage"
 import { create } from 'apisauce'
+import { User } from "./types"
 
 // Define User type
-export type User = {
-  activity_level: number;
-  address: string;
-  date_birth: string;
-  username: string;
-  email: string;
-  gender: number;
-  height: number;
-  objective: number;
-  weight: number;
-  startWeight :number;
-  weeklyObjective : number;
-  imageLink : string;
-  weight_obj: number;
-  zipcode: number;
-  FoodConsumed ?: any;
-  Workouts?: any;
-};
+
 
 // Define the context type
 type LoginContextType = {

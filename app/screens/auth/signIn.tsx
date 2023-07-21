@@ -6,7 +6,7 @@ import {
   Dimensions, Alert,
 } from "react-native"
 import { useNavigation } from "@react-navigation/native"
-import { Button, RightAccessoryComponent, Screen, TextField } from "../../components"
+import { Button, Icon, Screen, TextField, TextFieldAccessoryProps } from "../../components"
 // @ts-ignore
 import Logo from "assets/images/imageWithoutText.png"
 import { useLogin } from "../../context"
@@ -17,12 +17,13 @@ import { translate } from "../../i18n"
 
 const windowWidth = Dimensions.get("window").width
 const windowHeight = Dimensions.get("window").height
-const RightAccessory = React.memo(RightAccessoryComponent)
 
 
 const SignInScreen = () => {
   const { setUser, setIsLogged } = useLogin()
-
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [passwordShow, setPassShow] = useState<boolean>(true)
   const navigation = useNavigation()
   const onForgotPassword = () => {
     navigation.navigate("ForgetPassword" as never)
@@ -31,6 +32,21 @@ const SignInScreen = () => {
     navigation.navigate("ObjectiveSupPageOne" as never)
 
   }
+  const PasswordRightAccessory = useMemo(
+    () =>
+      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
+        return (
+          <Icon
+            icon={passwordShow ? "view" : "hidden"}
+            color={colors.palette.neutral800}
+            containerStyle={props.style}
+            onPress={() => setPassShow(!passwordShow)}
+          />
+        )
+      },
+    [passwordShow],
+  )
+
   const SignInPressed = () => {
     if (email.length && password.length) {
       api.post("/user/login", JSON.stringify({
@@ -55,16 +71,6 @@ const SignInScreen = () => {
     }
   }
 
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [passwordShow, setPassShow] = useState<boolean>(true)
-  const handleIconPress = () => {
-    setPassShow(!passwordShow)
-  }
-
-  const MemoizedRightAccessory = useMemo(() => {
-    return <RightAccessory onIconPress={handleIconPress} />
-  }, [handleIconPress])
 
   return (
     <Screen preset={"scroll"}>
@@ -76,7 +82,8 @@ const SignInScreen = () => {
 
           <TextField placeholderTx={'SignIn.password'} placeholderTxOptions={{ tx:'SignIn.password'}} labelTx={'SignIn.password'} labelTxOptions={{ tx:'SignIn.password'}} value={password} onChangeText={setPassword} autoComplete="password"
                      secureTextEntry={passwordShow}
-                     RightAccessory={(props) => React.cloneElement(MemoizedRightAccessory, props)} />
+                     RightAccessory={PasswordRightAccessory}
+                      />
           <Button tx="SignIn.button" txOptions={{ tx: "SignIn.button" }} onPress={SignInPressed} />
           <Button tx="SignIn.forgotPassword" txOptions={{ tx: "SignIn.forgotPassword" }} onPress={onForgotPassword} />
         </View>
