@@ -20,3 +20,16 @@ export const formatDate = (date: string, dateFormat?: string, options?: Options)
   }
   return format(parseISO(date), dateFormat ?? "MMM dd, yyyy", dateOptions)
 }
+
+export const ensureFullISODate= (dateString: string): string => {
+  if (!dateString) { return ""; }
+  const match = dateString.match(/T\d{2}$/);
+
+  if (match) {
+    // if dateString ends with "T" followed by two digits (an hour), add ":00:00" for minutes and seconds
+    return dateString + ":00:00";
+  } else {
+    // otherwise, return the dateString as is
+    return dateString;
+  }
+}

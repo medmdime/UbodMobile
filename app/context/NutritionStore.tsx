@@ -49,4 +49,4 @@ const NutritionProvider = ({children}) => {
 
 export const useNutrition = () => useContext(NutritionContext);
 
-export default NutritionProvider;
+export { NutritionProvider };

@@ -3,7 +3,7 @@ import {
   Text,
 } from "react-native"
 import { useLogin } from "../../context"
-import { remove } from "../../utils/storage"
+import { clear, remove } from "../../utils/storage"
 import { Button, Header, Screen } from "../../components"
 
 const Profile = () => {
@@ -16,8 +16,7 @@ const Profile = () => {
           onPress={() => {
             setIsLogged(false)
             setUser({} as any)
-            remove("jwt");
-            remove("user");
+            clear()
           }}>
           <Text >Déconnexion</Text>
         </Button>

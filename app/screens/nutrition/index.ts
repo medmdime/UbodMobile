@@ -1,1 +1,2 @@
-export * from './Nutrition'
+export * from './Nutrition';
+export * from './BarcodeScanner';

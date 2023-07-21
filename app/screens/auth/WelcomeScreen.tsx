@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native"
 
 
 const Logo = require("assets/images/imageWithoutText.png");
-const background = require("assets/images/colorful-shades-abstract-background.jpg");
+const background = require("assets/images/colorful-shades-abstract-background.webp");
 const WelcomeScreen = () => {
   const navigation = useNavigation()
   const $baseViewStylebuttonOne: ViewStyle = {

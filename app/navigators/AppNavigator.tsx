@@ -29,8 +29,8 @@ import {
   LoadingScreen,
   Home,
   Sport,
-  Nutrition
-
+  Nutrition,
+  BarcodeScanner
 
 } from "../screens"
 import { useLogin } from "../context"
@@ -66,7 +66,7 @@ export type AppStackParamList = {
   Home: React.FC
   Nutrition: React.FC
   LoadingScreen: React.FC
-
+  BarcodeScanner: React.FC
 }
 
 
@@ -167,6 +167,8 @@ const AppStack: React.FC = () => {
       screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
     >
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} options={{ headerShown: false }} />
+
     </Stack.Navigator>
   )
 }
@@ -197,7 +199,6 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
   const { isLogged, loginPending } = useLogin()
-
   return (
     <NavigationContainer
       ref={navigationRef}

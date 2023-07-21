@@ -6,9 +6,10 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-import { Card } from "../../components"
-import { useUserNutrition } from "../../context/UserCalorieIntake"
+import { Card, Header } from "../../components"
 import { SwipeListView } from "react-native-swipe-list-view"
+import { useUserNutrition } from "../../context"
+import { useNavigation } from "@react-navigation/native"
 
 const Nutrition = () => {
   const {
@@ -26,7 +27,7 @@ const Nutrition = () => {
     setLastMeal,
   } = useUserNutrition();
 
-
+  const navigator = useNavigation();
 
   const deleteItem = (mealType, index) => {
     if (mealType === 'breakfast') {
@@ -74,8 +75,6 @@ const Nutrition = () => {
     </View>
   );
 
-
-
   const renderMealType = ({item}) => (
     <View style={styles.CalorieContainerSecondary}>
       <View style={styles.titleContainer}>
@@ -95,6 +94,7 @@ const Nutrition = () => {
         style={styles.addButton}
         onPress={() => {
           setLastMeal(item.title);
+          navigator.navigate('BarcodeScanner' as never);
         }}>
         <Text style={styles.addButtonText}>ADD FOOD</Text>
       </TouchableOpacity>
@@ -103,6 +103,7 @@ const Nutrition = () => {
 
   return (
     <>
+      <Header title="Nutrition" />
       <View style={styles.container}>
 
         <View style={styles.CalorieContainerPrimary}>

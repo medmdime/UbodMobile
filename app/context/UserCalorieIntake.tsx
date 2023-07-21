@@ -2,6 +2,7 @@ import { Meal, User } from "./types"
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { useLogin } from "./LoginProvider"
 import { useNutrition } from "./NutritionStore"
+import { ensureFullISODate } from "../utils/formatDate"
 
 interface UserNutritionData {
   user: User
@@ -52,6 +53,7 @@ interface MealNutrients {
     "saturated-fat_100g"?: number;
   };
 }
+
 interface UserNutritionContextData extends UserNutritionData {
   setUserData: (data: Partial<UserNutritionData>) => void;
 }
@@ -81,18 +83,15 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
     snack,
     setSnack,
   } = useNutrition()
-  const { gender, height, weight, objective, activityLevel, dateBirth } =
-    DataLoginUser.user;
-
-  const [targetCaloriesIntake, setTargetCaloriesIntake] = useState(0)
-  const [foodCalories, setFoodCalories] = useState(0)
-  const [activityFactor, setActivityFactor] = useState(getActivityFactor(DataLoginUser.user.activityLevel))
+  const [targetCaloriesIntake, setTargetCaloriesIntake] = useState<number>(0)
+  const [foodCalories, setFoodCalories] = useState<number>(0)
+  const [activityFactor, setActivityFactor] = useState(getActivityFactor(DataLoginUser.user?.activity_level ?? 1))
   const [userData, setUserDataState] = useState<UserNutritionData>({} as UserNutritionData)
-
 
   const setUserData = (data: Partial<UserNutritionData>) => {
     setUserDataState((prevState) => ({ ...prevState, ...data }))
   }
+
   function getActivityFactor(activityLevel: number) {
     switch (activityLevel) {
       case 1:
@@ -107,15 +106,18 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
         return 1.2
     }
   }
-  const calculateCalories = (meals: MealNutrients[] = []) => meals.reduce((acc, meal) => acc + (meal.nutrimentPortion["energy-kcal"] || 0), 0)
-  const calculateNutrients = (meals: MealNutrients[] , nutrientName: string) => meals.reduce((acc, meal) => acc + (meal.nutrimentPortion[nutrientName] || 0), 0)
-  const calculateMacronutrients = (): void => {
-    // Calculate protein, carbs, and fat based on the user's gender and goal
-    const isMale = gender === 1;
 
-    const proteinPercentage = 30;
-    const carbsPercentage = isMale ? 40 : 45;
-    const fatPercentage = isMale ? 30 : 25;
+  const calculateCalories = (meals: MealNutrients[] = []) => meals.reduce((acc, meal) => acc + ( meal.nutrimentPortion.hasOwnProperty("energy-kcal") ? meal?.nutrimentPortion["energy-kcal"]
+    : 0), 0)
+  const calculateNutrients = (meals: MealNutrients[], nutrientName: string) =>
+    meals.reduce((acc, meal) =>
+        acc + (meal?.nutrimentPortion && meal.nutrimentPortion.hasOwnProperty(nutrientName) ? meal.nutrimentPortion[nutrientName] : 0),
+      0);  const calculateMacronutrients = (): void => {
+    // Calculate protein, carbs, and fat based on the user's gender and goal
+    const isMale = DataLoginUser.user?.gender === 1
+    const proteinPercentage = 30
+    const carbsPercentage = isMale ? 40 : 45
+    const fatPercentage = isMale ? 30 : 25
 
     const totalProtein = (targetCaloriesIntake * proteinPercentage) / 100 / 4 // 4 calories per gram of protein
     const totalCarbs = (targetCaloriesIntake * carbsPercentage) / 100 / 4 // 4 calories per gram of carbohydrate
@@ -127,9 +129,11 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
       fat: Math.round(totalFat),
     })
   }
+
+
   const calculateMicronutrients = (): void => {
     // Recommended daily values for micronutrients
-    const fiber = gender === 1 ? 38 : 25 // Male: 38g, Female: 25g
+    const fiber = DataLoginUser.user?.gender === 1 ? 38 : 25 // Male: 38g, Female: 25g
     const sugar = 50 // Limit added sugar to 50g per day
     const AcideGrasSatures = Math.round((targetCaloriesIntake * 0.1) / 9) // 10% of daily calories
     const Sodium = 2300 // Limit sodium to 2300mg per day
@@ -141,20 +145,15 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
     })
   }
   const targetCalories = () => {
-    const age = new Date().getFullYear() - new Date(dateBirth).getFullYear()
-
-
-    setActivityFactor(getActivityFactor(activityLevel))
-    const isMale = DataLoginUser.user.gender === 1;
-
+    const age = new Date().getFullYear() - new Date(ensureFullISODate(DataLoginUser.user?.date_birth)).getFullYear()
+    setActivityFactor(getActivityFactor(DataLoginUser.user?.activity_level))
+    const isMale = DataLoginUser.user?.gender === 1
     const calculatedBmr = isMale
-      ? 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age
-      : 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age
-
+      ? 88.362 + 13.397 * DataLoginUser.user?.weight + 4.799 * DataLoginUser.user?.height - 5.677 * age
+      : 447.593 + 9.247 * DataLoginUser.user?.weight + 3.098 * DataLoginUser.user?.height - 4.33 * age
     const calculatedTdee = calculatedBmr * activityFactor
-
     let targetCaloriePercentage = 100
-    if (objective === 1) { // Lose weight
+    if (DataLoginUser.user?.objective === 1) { // Lose weight
       targetCaloriePercentage = 80
     }
 
@@ -187,6 +186,7 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
     const mealNutrientSums: { [key: string]: { [key: string]: number } } = {}
 
     nutrients.forEach(nutrient => {
+
       mealNutrientSums[nutrient] = {
         breakfast: calculateNutrients(breakfast, nutrient),
         lunch: calculateNutrients(lunch, nutrient),
