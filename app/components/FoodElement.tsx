@@ -1,28 +1,19 @@
 import React, { FC } from 'react';
 import { Text, View, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { Meal } from "../context/types"
 
-// Define interfaces for the props
-interface NutrimentsPortion {
-  'energy-kcal'?: number;
-  [key: string]: any;
-}
+// Define interfaces for the prop
 
-interface Value {
-  _id?: string;
-  product_name?: string;
-  nutrimentsportion: NutrimentsPortion;
-  portion: number;
-}
 
 interface FoodElementProps {
-  value: Value;
+  value: Meal;
   onPress: () => void;
 }
 
 const FoodElement: FC<FoodElementProps> = ({ value, onPress }) => {
   const name = value.product_name ?? 'product n° ' + value._id;
-  const energy = value.nutrimentsportion?.['energy-kcal'] ?? '??';
-  const energyUnit = value.nutrimentsportion?.['energy-kcal'] ? 'kcal' : '';
+  const energy = value.nutrimentsPortion?.['energy-kcal'] ?? '??';
+  const energyUnit = value.nutrimentsPortion?.['energy-kcal'] ? 'kcal' : '';
 
   return (
     <Pressable style={styles.container} onPress={onPress}>

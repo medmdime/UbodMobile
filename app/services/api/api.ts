@@ -13,7 +13,6 @@ import Config from "../../config"
 import type {
   ApiConfig,
 } from "./api.types"
-import { Meal } from "../../context/types"
 
 /**
  * Configuring the apisauce instance.
@@ -60,4 +59,4 @@ export const apiNutrition = create({
 })
 
 export const  getMeal = async (query: string) => await apiNutrition.get(`/search.pl?code=${query}&fields=_id,product_name,serving_quantity,nova_group,nutriscore_grade,image_url,nutriments&action=process&json=1&`)
-
+export const searchMeal = async (query: string) => await apiNutrition.get(`/search.pl?search_terms=${query}&search_simple=1&action=process&json=1&`)

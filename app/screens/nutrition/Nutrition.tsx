@@ -11,7 +11,6 @@ import { SwipeListView } from "react-native-swipe-list-view"
 import { useUserNutrition } from "../../context"
 import { useNavigation } from "@react-navigation/native"
 import FoodElement from "../../components/FoodElement"
-import { colors } from "../../theme"
 
 const Nutrition = () => {
   const {
@@ -103,7 +102,7 @@ const Nutrition = () => {
         style={styles.addButton}
         onPress={() => {
           setLastMeal(item.title);
-          navigator.navigate('BarcodeScanner' as never);
+          navigator.navigate('MealSearch' as never);
         }}>
         <Text style={styles.addButtonText}>ADD FOOD</Text>
       </TouchableOpacity>
@@ -233,6 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 15,
   },
+  // eslint-disable-next-line react-native/sort-styles
   list: {
     flex: 1,
   },

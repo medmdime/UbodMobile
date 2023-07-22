@@ -30,8 +30,8 @@ import {
   Home,
   Sport,
   Nutrition,
-  BarcodeScanner
-
+  BarcodeScanner,
+  MealSearch
 } from "../screens"
 import { useLogin } from "../context"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -67,6 +67,7 @@ export type AppStackParamList = {
   Nutrition: React.FC
   LoadingScreen: React.FC
   BarcodeScanner: React.FC
+  MealSearch: React.FC
 }
 
 
@@ -167,8 +168,8 @@ const AppStack: React.FC = () => {
       screenOptions={{ headerShown: true, navigationBarColor: colors.background }}
     >
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} options={{ headerShown: false }} />
-
+      <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} options={{ headerShown: true }} />
+      <Stack.Screen name="MealSearch" component={MealSearch} options={{ headerShown: true }} />
     </Stack.Navigator>
   )
 }
