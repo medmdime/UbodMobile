@@ -2,9 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import { load, loadString, save } from "../utils/storage"
 import { create } from 'apisauce'
 import { defaultUser, User } from "./types"
-import { hideAsync } from "expo-splash-screen"
 
-// Define User type
 
 
 // Define the context type
@@ -67,7 +65,7 @@ const LoginProvider: React.FC<LoginProviderProps> = ({children}) => {
   useEffect(() => {
     isConnectedJwt()
       .then(() => {
-        setTimeout(() => setLoginPending(false), 0);
+        setTimeout(() => setLoginPending(false), 200);
       });
   }, [token]);
 

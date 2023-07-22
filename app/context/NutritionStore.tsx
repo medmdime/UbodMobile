@@ -1,21 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
-import { Meal } from "./types"
+import { defaultMeal, Meal, MealType, NutritionContextType } from "./types"
 
-
-type NutritionContextType = {
-  breakfast: Meal[];
-  setBreakfast: React.Dispatch<React.SetStateAction<Meal[]>>;
-  lunch: Meal[];
-  setLunch: React.Dispatch<React.SetStateAction<Meal[]>>;
-  dinner: Meal[];
-  setDinner: React.Dispatch<React.SetStateAction<Meal[]>>;
-  snack: Meal[];
-  setSnack: React.Dispatch<React.SetStateAction<Meal[]>>;
-  lastSeenProduct: Meal[];
-  setLastSeenProduct: React.Dispatch<React.SetStateAction<Meal[]>>;
-  lastMeal: Meal;
-  setLastMeal: React.Dispatch<React.SetStateAction<Meal>>;
-}
 const NutritionContext = createContext<NutritionContextType>({} as NutritionContextType);
 
 const NutritionProvider = ({children}) => {
@@ -23,8 +8,8 @@ const NutritionProvider = ({children}) => {
   const [lunch, setLunch] = useState<Meal[]>([]);
   const [dinner, setDinner] = useState<Meal[]>([]);
   const [snack, setSnack] = useState<Meal[]>([]);
-  const [lastSeenProduct, setLastSeenProduct] = useState<Meal[]>([]);
-  const [lastMeal, setLastMeal] = useState<Meal>({} as Meal);
+  const [lastSeenProduct, setLastSeenProduct] = useState<Meal>(defaultMeal);
+  const [lastMeal, setLastMeal] = useState<MealType>(MealType.Breakfast);
 
   return (
     <NutritionContext.Provider

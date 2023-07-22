@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react"
 import {
   Text,
   View,
@@ -6,20 +6,22 @@ import {
   StyleSheet,
   FlatList,
 } from 'react-native';
-import { Card, Header } from "../../components"
+import {  Header } from "../../components"
 import { SwipeListView } from "react-native-swipe-list-view"
 import { useUserNutrition } from "../../context"
 import { useNavigation } from "@react-navigation/native"
+import FoodElement from "../../components/FoodElement"
+import { colors } from "../../theme"
 
 const Nutrition = () => {
   const {
-    Breakfast,
+    breakfast,
     setLunch,
-    Lunch,
+    lunch,
     setBreakfast,
-    Dinner,
+    dinner,
     setDinner,
-    Snack,
+    snack,
     setSnack,
     targetCalories,
     foodCalories,
@@ -28,22 +30,24 @@ const Nutrition = () => {
   } = useUserNutrition();
 
   const navigator = useNavigation();
+  const [scrollEnabled, setScrollEnabled] = useState<boolean>(true);
 
-  const deleteItem = (mealType, index) => {
+
+  const deleteItem = (mealType : string , index : number) => {
     if (mealType === 'breakfast') {
-      const newBreakfast = [...Breakfast];
+      const newBreakfast = [...breakfast];
       newBreakfast.splice(index, 1);
       setBreakfast(newBreakfast);
     } else if (mealType === 'lunch') {
-      const newLunch = [...Lunch];
+      const newLunch = [...lunch];
       newLunch.splice(index, 1);
       setLunch(newLunch);
     } else if (mealType === 'dinner') {
-      const newDinner = [...Dinner];
+      const newDinner = [...dinner];
       newDinner.splice(index, 1);
       setDinner(newDinner);
     } else if (mealType === 'snack') {
-      const newSnack = [...Snack];
+      const newSnack = [...snack];
       newSnack.splice(index, 1);
       setSnack(newSnack);
     }
@@ -51,9 +55,9 @@ const Nutrition = () => {
 
 
   const renderItem = data => (
-    <Card
+    <FoodElement
       key={`${data.item.mealType}-${data.index}`}
-      content={data.item}
+      value={data.item}
       onPress={() => {
         setLastSeenProduct(data.item);
       }}
@@ -85,9 +89,14 @@ const Nutrition = () => {
           ...food,
           mealType: item.title.toLowerCase(),
         }))}
+        friction={200}
+        swipeGestureBegan={() => setScrollEnabled(false)}
+        swipeGestureEnded={() => setScrollEnabled(true)}
         renderItem={renderItem}
+        tension={10}
+        rightOpenValue={-100}
+        previewRowKey={'0'}
         renderHiddenItem={renderHiddenItem}
-        rightOpenValue={-75}
         keyExtractor={(item : any, index) => `${item.mealType}-${index}`}
       />
       <TouchableOpacity
@@ -129,11 +138,13 @@ const Nutrition = () => {
           </View>
         </View>
         <FlatList
+          style={styles.list}
+          scrollEnabled={scrollEnabled}
                   data={[
-                    {title: 'Breakfast', data: Breakfast},
-                    {title: 'Lunch', data: Lunch},
-                    {title: 'Dinner', data: Dinner},
-                    {title: 'Snack', data: Snack},
+                    {title: 'Breakfast', data: breakfast},
+                    {title: 'Lunch', data: lunch},
+                    {title: 'Dinner', data: dinner},
+                    {title: 'Snack', data: snack},
 
                   ]}
                   renderItem={renderMealType}
@@ -188,7 +199,7 @@ const styles = StyleSheet.create({
 
   },
   container: {
-    height: '100%',
+    flex: 1,
     // eslint-disable-next-line react-native/no-color-literals
   },deleteButton: {
     alignItems: 'center',
@@ -198,7 +209,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
-    width: 75,
+    width: 100,
   },
   // eslint-disable-next-line react-native/no-color-literals
   deleteButtonText: {
@@ -221,6 +232,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 15,
+  },
+  list: {
+    flex: 1,
   },
   // eslint-disable-next-line react-native/no-color-literals
   text: {

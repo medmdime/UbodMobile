@@ -13,6 +13,7 @@ import Config from "../../config"
 import type {
   ApiConfig,
 } from "./api.types"
+import { Meal } from "../../context/types"
 
 /**
  * Configuring the apisauce instance.
@@ -52,3 +53,11 @@ export const api = create({
   baseURL: "https://ubod.online/api",
   headers: { "Content-Type": "application/json" },
 })
+export const apiNutrition = create({
+  baseURL: "https://world.openfoodfacts.org/cgi",
+  headers: { "Content-Type": "application/json" },
+
+})
+
+export const  getMeal = async (query: string) => await apiNutrition.get(`/search.pl?code=${query}&fields=_id,product_name,serving_quantity,nova_group,nutriscore_grade,image_url,nutriments&action=process&json=1&`)
+

@@ -1,66 +1,10 @@
-import { Meal, User } from "./types"
+import { Meal, UserNutritionContextData, UserNutritionData } from "./types"
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import { useLogin } from "./LoginProvider"
-import { useNutrition } from "./NutritionStore"
+import {  useNutrition } from "./NutritionStore"
 import { ensureFullISODate } from "../utils/formatDate"
 
-interface UserNutritionData {
-  user: User
-  targetCalories: number;
-  foodCalories: number;
-  protein: number;
-  proteinConsumed: number;
-  carbs: number;
-  carbsConsumed: number;
-  fat: number;
-  fatConsumed: number;
-  fiber: number;
-  fiberConsumed: number;
-  sugar: number;
-  sugarConsumed: number;
-  AcideGrasSatures: number;
-  AcideGrasSaturesConsumed: number;
-  Sodium: number;
-  SodiumConsumed: number;
-
-  Lunch: Meal[];
-  caloriesLunch: number;
-  setLunch: (object: Meal[]) => void;
-  Dinner: Meal[];
-  caloriesDinner: number;
-  setDinner: (object: Meal[]) => void;
-  Breakfast: Meal[];
-  caloriesBreakfast: number;
-  setBreakfast: (object: Meal[]) => void;
-  Snack: Meal[];
-  caloriesSnack: number;
-  setSnack: (object: Meal[]) => void;
-  lastMeal: Meal[];
-  setLastMeal: (object: Meal) => void;
-  lastSeenProduct: Meal;
-  setLastSeenProduct: (object: Meal) => void;
-}
-
-interface MealNutrients {
-  nutrimentPortion: {
-    "energy-kcal"?: number;
-    "carbohydrates_100g"?: number;
-    "proteins_100g"?: number;
-    "fat_100g"?: number;
-    "fiber_100g"?: number;
-    "sodium_100g"?: number;
-    "sugars_100g"?: number;
-    "saturated-fat_100g"?: number;
-  };
-}
-
-interface UserNutritionContextData extends UserNutritionData {
-  setUserData: (data: Partial<UserNutritionData>) => void;
-}
-
 const UserNutritionContext = createContext<UserNutritionContextData>({} as UserNutritionContextData)
-
-
 interface UserNutritionProviderProps {
   children: ReactNode;
 }
@@ -82,7 +26,7 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
     setLastSeenProduct,
     snack,
     setSnack,
-  } = useNutrition()
+  } = useNutrition();
   const [targetCaloriesIntake, setTargetCaloriesIntake] = useState<number>(0)
   const [foodCalories, setFoodCalories] = useState<number>(0)
   const [activityFactor, setActivityFactor] = useState(getActivityFactor(DataLoginUser.user?.activity_level ?? 1))
@@ -91,7 +35,6 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
   const setUserData = (data: Partial<UserNutritionData>) => {
     setUserDataState((prevState) => ({ ...prevState, ...data }))
   }
-
   function getActivityFactor(activityLevel: number) {
     switch (activityLevel) {
       case 1:
@@ -106,13 +49,12 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
         return 1.2
     }
   }
-
-  const calculateCalories = (meals: MealNutrients[] = []) => meals.reduce((acc, meal) => acc + ( meal.nutrimentPortion.hasOwnProperty("energy-kcal") ? meal?.nutrimentPortion["energy-kcal"]
-    : 0), 0)
-  const calculateNutrients = (meals: MealNutrients[], nutrientName: string) =>
+  const calculateCalories = (meals: Meal[] = []) => meals.reduce((acc, meal) => acc + ((meal?.nutrimentsPortion && Object.prototype.hasOwnProperty.call(meal.nutrimentsPortion, "energy-kcal")) ? meal.nutrimentsPortion["energy-kcal"] : 0), 0);
+  const calculateNutrients = (meals: Meal[], nutrientName: string) =>
     meals.reduce((acc, meal) =>
-        acc + (meal?.nutrimentPortion && meal.nutrimentPortion.hasOwnProperty(nutrientName) ? meal.nutrimentPortion[nutrientName] : 0),
-      0);  const calculateMacronutrients = (): void => {
+        acc + (meal?.nutrimentsPortion && Object.prototype.hasOwnProperty.call(meal?.nutrimentsPortion, nutrientName) ? meal.nutrimentsPortion[nutrientName] : 0),
+      0);
+  const calculateMacronutrients = (): void => {
     // Calculate protein, carbs, and fat based on the user's gender and goal
     const isMale = DataLoginUser.user?.gender === 1
     const proteinPercentage = 30
@@ -129,8 +71,6 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
       fat: Math.round(totalFat),
     })
   }
-
-
   const calculateMicronutrients = (): void => {
     // Recommended daily values for micronutrients
     const fiber = DataLoginUser.user?.gender === 1 ? 38 : 25 // Male: 38g, Female: 25g
@@ -201,10 +141,10 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
     setFoodCalories(totalCalories)
     setUserData({
       foodCalories: totalCalories,
-      Lunch: lunch,
-      Dinner: dinner,
-      Breakfast: breakfast,
-      Snack: snack,
+      lunch,
+      dinner,
+      breakfast,
+      snack,
       lastMeal,
       lastSeenProduct,
       setLastSeenProduct,
@@ -236,7 +176,6 @@ const UserNutritionProvider: React.FC<UserNutritionProviderProps> = ({ children 
   }, [DataLoginUser])
 
   return (
-
     <UserNutritionContext.Provider value={{ ...userData, setUserData }}>
       {children}
     </UserNutritionContext.Provider>

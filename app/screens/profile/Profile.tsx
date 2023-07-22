@@ -3,7 +3,7 @@ import {
   Text,
 } from "react-native"
 import { useLogin } from "../../context"
-import { clear, remove } from "../../utils/storage"
+import { clear } from "../../utils/storage"
 import { Button, Header, Screen } from "../../components"
 
 const Profile = () => {
