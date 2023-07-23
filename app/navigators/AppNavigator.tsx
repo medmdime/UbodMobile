@@ -155,9 +155,6 @@ const BottomTabNavigator = observer(function AppStack() {
           },
         }}
       />
-
-
-
     </BottomTab.Navigator>
   )
 })
@@ -169,7 +166,7 @@ const AppStack: React.FC = () => {
     >
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} options={{ headerShown: true }} />
-      <Stack.Screen name="MealSearch" component={MealSearch} options={{ headerShown: true }} />
+      <Stack.Screen name="MealSearch" component={MealSearch} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }

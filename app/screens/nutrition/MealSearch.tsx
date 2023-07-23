@@ -11,13 +11,12 @@ import {
 import { useNutrition } from "../../context"
 import { ApiResponseNutrition, searchMeal } from "../../services/api"
 import { Meal, updateNutriments } from "../../context/types"
-import { Searchbar } from 'react-native-paper';
+import { Searchbar } from "react-native-paper"
 import FoodElement from "../../components/FoodElement"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import { Header } from "../../components"
+import { Header, Screen } from "../../components"
 import { useNavigation } from "@react-navigation/native"
-import { NativeSyntheticEvent } from "react-native/Libraries/Types/CoreEventTypes"
-import { TextInputEndEditingEventData } from "react-native/Libraries/Components/TextInput/TextInput"
+
 
 
 const MealSearch = () => {
@@ -25,21 +24,26 @@ const MealSearch = () => {
   const [searchResult, setSearchResult] = useState<Meal[]>([])
   const navigator = useNavigation()
   const [searchQuery, setSearchQuery] = useState<string>("")
+  console.log(searchResult)
 
+  const nutrition = useNutrition()
 
-  const nutrition = useNutrition();
-
-  const setSearchMeal =  (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
-    setSearchQuery(e.nativeEvent.text);
-    runSearch(e.nativeEvent.text.toString());
+  const setSearchMeal = (text: string ) => {
+    setSearchQuery(text)
+    if (text.length < 3) {
+      setSearchResult([])
+    }
+    else {
+      runSearch(text)
+    }
   }
   const runSearch = async (searchPhrase: string) => {
     try {
       const response = await searchMeal(searchPhrase)
       if (response.ok) {
         const data = response.data as ApiResponseNutrition
-        const result : Meal[] = [];
-        for ( const product of data.products) {
+        const result: Meal[] = []
+        for (const product of data.products) {
           result.push(updateNutriments(product))
         }
         console.log(result)
@@ -54,7 +58,7 @@ const MealSearch = () => {
   const searchList = () => {
     let i = 0
     return searchResult.map(res => {
-      const updatedRes = updateNutriments(res);
+      const updatedRes = updateNutriments(res)
       return (
         <FoodElement
           value={updatedRes}
@@ -68,13 +72,12 @@ const MealSearch = () => {
   }
 
   return (
-    <>
+    <Screen preset={"scroll"}>
       <Header title="Rechercher un aliment" />
       <View style={style.topView}>
         <Searchbar
           placeholder="Search"
-          onChangeText={setSearchQuery}
-          onEndEditing={setSearchMeal}
+          onChangeText={setSearchMeal}
           value={searchQuery}
         />
       </View>
@@ -100,15 +103,11 @@ const MealSearch = () => {
           <Text style={style.scanButtonText}>??????</Text>
         </Pressable>
       </View>
+        <Text style={style.title}>Résultats de la recherche</Text>
+          {searchList()}
 
-        <View>
-          <Text style={style.title}>Résultats de la recherche</Text>
-          <ScrollView>
-            <View style={style.results}>{searchList()}</View>
-          </ScrollView>
-        </View>
 
-    </>
+    </Screen>
   )
 }
 
@@ -122,8 +121,8 @@ const style = StyleSheet.create({
   },
   noSearchPhrase: {
     backgroundColor: "#FED",
-    height: Dimensions.get("window").height,
     display: "flex",
+    flex : 1,
     flexDirection: "row",
   },
   noResult: {},

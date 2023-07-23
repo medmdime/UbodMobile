@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Text, View, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Dimensions } from "react-native"
 import { Meal } from "../context/types"
+import { AutoImage } from "./AutoImage"
 
 // Define interfaces for the prop
 
@@ -18,14 +19,11 @@ const FoodElement: FC<FoodElementProps> = ({ value, onPress }) => {
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <View style={styles.textContainer}>
-        <View style={styles.textContainer}>
           <Text style={styles.textmain}>{name}</Text>
           <Text style={styles.textsec}> {100 * value.portion}g</Text>
-        </View>
-        <Text style={styles.textsec}>
-          {energy} {energyUnit}
-        </Text>
+          <Text style={styles.textsec}>{energy} {energyUnit}</Text>
       </View>
+      <AutoImage source={{uri:  value.image_url }} style={{ width: 50, height: 50 }} />
     </Pressable>
   );
 };
@@ -44,7 +42,7 @@ const styles = StyleSheet.create({
   textContainer: {
     display: 'flex',
     flexDirection: 'column',
-
+    width: Dimensions.get('window').width * 0.6,
   },
   textmain: {
     color: 'black',
