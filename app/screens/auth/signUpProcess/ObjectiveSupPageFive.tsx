@@ -23,23 +23,25 @@ const ObjectiveSupPageFive = () => {
 
   const onRegisterPressed = () => {
     if (password === passwordRepeat) {
-      api.post("/user/register",
+
+      api.post("register",
         JSON.stringify({
           username: username.toLowerCase(),
           email: email.toLowerCase(),
           password,
           weight,
-          weight_obj: weightObj,
+          weightObj,
           objective,
           height,
-          zipcode: zipCode,
+          zipCode,
           address,
-          date_birth: dateBirth,
+          dateBirth,
           gender,
-          activity_level: activityLevel,
+          activityLevel,
         }))
-        .then(response => response.data)
+        .then(response =>{console.log(response) ; return response.data})
         .then((data: any) => {
+
           if (data.error) {
             Alert.alert(data.message.toString())
           } else {
@@ -48,6 +50,8 @@ const ObjectiveSupPageFive = () => {
           }
         })
         .catch(error => {
+          console.log(error.message.toString());
+
           Alert.alert(error.message.toString())
         })
     } else {

@@ -45,8 +45,6 @@ export class DatePicker extends React.Component<Props, MyState> {
           />
         </Modal>
       </Portal>
-
-
     )
   };
 }

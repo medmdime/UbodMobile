@@ -14,6 +14,7 @@ import { colors } from "../../theme"
 import { saveString } from "../../utils/storage"
 import { api } from "../../services/api"
 import { translate } from "../../i18n"
+import {  User } from "../../context/types"
 
 const windowWidth = Dimensions.get("window").width
 const windowHeight = Dimensions.get("window").height
@@ -49,14 +50,28 @@ const SignInScreen = () => {
 
   const SignInPressed = () => {
     if (email.length && password.length) {
-      api.post("/user/login", JSON.stringify({
-        email: email.toLowerCase(),
+      api.post("/login", JSON.stringify({
+        identifier: email.toLowerCase(),
         password,
       })).then(response => response.data)
         .then((data: any) => {
-          if (data.message.toString() === "Login Successful") {
+          if (data.token) {
             saveString("jwt", data.token.toString())
-            setUser(data.user)
+            const user : User = {
+              imageLink: "",
+              startWeight: 0,
+              activityLevel: data.activityLevel,
+              dateBirth: data.dateBirth,
+              username: data.username,
+              gender: data.gender,
+              objective: data.objective,
+              weight: data.weight,
+              weightObj: data.weightObj,
+              height: data.height,
+              zipcode: data.zipCode
+            };
+
+            setUser(user)
             setIsLogged(true) // Update state variable here
           } else {
             Alert.alert(data.message.toString())
@@ -82,6 +97,7 @@ const SignInScreen = () => {
 
           <TextField placeholderTx={'SignIn.password'} placeholderTxOptions={{ tx:'SignIn.password'}} labelTx={'SignIn.password'} labelTxOptions={{ tx:'SignIn.password'}} value={password} onChangeText={setPassword} autoComplete="password"
                      secureTextEntry={passwordShow}
+                     
                      RightAccessory={PasswordRightAccessory}
                       />
           <Button tx="SignIn.button" txOptions={{ tx: "SignIn.button" }} onPress={SignInPressed} />

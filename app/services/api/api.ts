@@ -49,7 +49,7 @@ export class Api {
 // Singleton instance of the API for convenience
 export const api1 = new Api()
 export const api = create({
-  baseURL: "https://ubod.online/api",
+  baseURL: "http://localhost:8080/api/",
   headers: { "Content-Type": "application/json" },
 })
 export const apiNutrition = create({

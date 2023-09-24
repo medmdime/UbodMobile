@@ -1,36 +1,32 @@
 import { Meal } from "./Meal"
 
 export type User = {
-  activity_level: number;
-  address: string;
-  date_birth: string;
+  activityLevel: number;
+  dateBirth: string;
   username: string;
-  email: string;
   gender: number;
   height: number;
   objective: number;
   weight: number;
-  start_weight :number;
+  startWeight :number;
   imageLink : string;
-  weight_obj: number;
+  weightObj: number;
   zipcode: number;
   foodConsumed ?: Meal[];
   workouts?: any;
 };
 
 export const defaultUser: User = {
-  activity_level: 0,
-  address: "",
-  date_birth: new Date().toString(),
+  activityLevel: 0,
+  dateBirth: new Date().toString(),
   username: "",
-  email: "",
   gender: 0,
   height: 0,
   objective: 1,
   weight: 0,
-  start_weight :0,
+  startWeight :0,
   imageLink : "",
-  weight_obj: 0,
+  weightObj: 0,
   zipcode: 0,
   foodConsumed :[],
   workouts: [],

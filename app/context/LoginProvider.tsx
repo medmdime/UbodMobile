@@ -35,7 +35,7 @@ const LoginProvider: React.FC<LoginProviderProps> = ({children}) => {
       setToken(token);
       if (token !== "" && token !== null) {
         const api = create({
-          baseURL: "https://ubod.online/api",
+          baseURL: "http://localhost/api",
           headers: { Authorization: `Bearer ${token}` },
         })
         const response = await api.get("/user/data")

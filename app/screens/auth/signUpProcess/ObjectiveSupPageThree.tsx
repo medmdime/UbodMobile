@@ -20,7 +20,7 @@ const ObjectiveSupPageThree = () => {
   const _storeData = async () => {
     if (date.toString() !== new Date().toString() && place !== "" && code !== "") {
       await saveString("gender", gender)
-      await saveString("date_birth", format(date, 'yyyy-MM-dd\'T\'HH') )
+      await saveString("date_birth", date.toISOString())
       await saveString("address", place)
       await saveString("zipcode", code)
       navigation.navigate("ObjectiveSupPageFour" as never)
